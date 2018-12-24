@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html>
+<!-- based on a Pen by Devilish Alchemist @ http://codepen.io/devilishalchemist/pen/LERvpM -->
+<head>
+  <meta charset="UTF-8">
+  <title>2) Git Comandos</title>
+
+  <link rel="stylesheet" href="../_resources/css/normalize.min.css">
+  <link rel="stylesheet" href="../_resources/css/whhg.css">
+  <link rel="stylesheet" href="../_resources/css/fonts.css">
+  <link rel="stylesheet" href="../_resources/css/style.css">
+
+</head>
+
+<body>
+  <div class="page">
+
+    <span id="view-toc" class="tooltip">&laquo; view index</span>
+    <span id="view-content" class="tooltip">return to content &raquo;</span>
+    <span id="view-next" class="tooltip">next page &raquo;</span>
+    <span id="view-prev" class="tooltip">&laquo; previous page</span>
+
+    <span class="menu_toggle">
+      <i class="menu_open icon icon-th-list"></i>
+      <i class="menu_close icon icon-import"></i>
+    </span>
+
+    <div id="navigation">
+      <ul>
+<li><a href="../Home.html" title="Home" class="page">Home</a>
+<ul>
+<li><a href="./1)_GitHub.html" title="1) GitHub" class="page">1) GitHub</a></li>
+<li><b>2) Git Comandos</b></li>
+</ul>
+</li>
+<li><a href="../Personalización_de_GnomeShell.html" title="Personalización de GnomeShell" class="page">Personalización de GnomeShell</a></li>
+<li><a href="../Referencias.html" title="Referencias" class="page">Referencias</a></li>
+<li><a href="../Ruby.html" title="Ruby" class="page">Ruby</a></li>
+</ul>
+
+      <span class="zimversion">
+        <small>built with</small><br><strong>Zim 0.68-rc1</strong>
+        <br>
+        --
+        <br>
+        <a href="https://github.com/scar45/ResponsivePivot">template<br> on Github<br><i class="icon icon-github"></i></a>
+      </span>
+    </div>
+
+    <main class="content">
+      <div class="content_inner">
+        <article>
+          <header>
+            <a id="navPrev" href='./1)_GitHub.html'><span><i class="icon icon-chevron-left"></i></span></a>
+
+            <a id="navHome" href='../Home.html'><span><i class="icon icon-homealt"></i></span></a>
+
+            <a id="navNext" href='../Personalización_de_GnomeShell.html'><span><i class="icon icon-chevron-right"></i></span></a>
+          </header>
+
+          <section>
+            <div class="page-title">
+              <h1><i class="icon icon-bookmarkalt"></i> 2) Git Comandos <a name='Home:2) Git Comandos'></a></h1>
+            </div>
+            <div class="fade fade-top"></div>
+            <div class="page-body">
+              <p>
+Created domingo 23 diciembre 2018
+</p>
+
+<h2>¿Cómo iniciar un repostorio de GitHub?</h2>
+
+<br>
+
+<p>
+Primero hay que logearse en <a href="https://github.com/" title="https://github.com/" class="https">https://github.com/</a> y buscar la opción de "New repository".<br>
+<img src="../img/Crear-repo.png">
+</p>
+
+<p>
+Despues hay que llenar los datos básicos como nombrar un repositorio<br>
+<img src="./2)_Git_Comandos/pasted_image.png">
+</p>
+
+<p>
+Al finalizar, damos en "Create repository"
+</p>
+
+<p>
+<img src="./2)_Git_Comandos/pasted_image001.png">
+</p>
+
+<p>
+Ahora creamos en nuestro disco un directorio donde inicializaremos el repositorio y posteriormente lo vamos a conectar a GitHub.<br>
+<img src="./2)_Git_Comandos/pasted_image002.png" height="532">
+</p>
+
+<p>
+Ahora entramos al directorio nuevo al cual vamos a nombrar "<b>MiRepo</b>"
+</p>
+
+<p>
+<img src="./2)_Git_Comandos/pasted_image003.png">
+</p>
+
+<p>
+Ya desde una terminal, vamos a teclear estos comandos<br>
+<img src="./2)_Git_Comandos/pasted_image004.png">
+</p>
+
+<h3>Comandos</h3>
+
+<p>
+git init<br>
+<img src="./2)_Git_Comandos/pasted_image005.png"><br>
+git add .<br>
+git commit -m "First commit"<br>
+<img src="./2)_Git_Comandos/pasted_image006.png">
+</p>
+
+<p>
+Y ahora debemos añadir el origen remoto de nuestro repositorio de GitHub
+</p>
+
+<p>
+<img src="./2)_Git_Comandos/pasted_image007.png">
+</p>
+
+<p>
+git remote add origin <a href="https://github.com/canrosss/MiRepo.git" title="https://github.com/canrosss/MiRepo.git" class="https">https://github.com/canrosss/MiRepo.git</a>
+</p>
+
+<p>
+Bien, todo parecía ir bien y al hacer el push para subir los cambios al remoto, se queja. 
+</p>
+
+<p>
+<img src="./2)_Git_Comandos/pasted_image008.png">
+</p>
+
+<p>
+Rechaza el cambio que he hecho, me dice que hay cambios que no están en el local y me recomienda que primero actualice mi copia de trabajo con esos cambios. Sus deseos son órdenes.
+</p>
+
+<p>
+git fetch origin<br>
+<img src="./2)_Git_Comandos/pasted_image009.png">
+</p>
+
+<p>
+git pull origin master --allow-unrelated-histories<br>
+git push origin master
+</p>
+
+<p>
+<img src="./2)_Git_Comandos/pasted_image010.png">
+</p>
+
+<p>
+Ahora todo esta sync.
+</p>
+
+<h3>RESUMEN DE COMANDOS</h3>
+
+<br>
+
+<p>
+Initialize the local directory as a Git repository.<br>
+git init<br>
+git add .<br>
+git commit -m "First commit"<br>
+git remote add origin <a href="https://github.com/canrosss/Apuntes.git" title="https://github.com/canrosss/Apuntes.git" class="https">https://github.com/canrosss/Apuntes.git</a><br>
+git remote -v<br>
+git push origin master
+</p>
+
+<p>
+Bien, todo parecía ir bien y al hacer el push para subir los cambios al remoto, se queja. Rechaza el cambio que he hecho, me dice que hay cambios que no están en el local y me recomienda que primero actualice mi copia de trabajo con esos cambios. Sus deseos son órdenes.
+</p>
+
+<p>
+~/proyectos/proyecto-nuevo&gt; git fetch origin
+</p>
+
+<p>
+⬤ [/home/canros/Notebooks/Apuntes/build]  git fetch origin 1:17:27  ☁  master ☀<br>
+warning: no hay commits comunes<br>
+remote: Enumerating objects: 4, done.<br>
+remote: Counting objects: 100% (4/4), done.<br>
+remote: Compressing objects: 100% (3/3), done.<br>
+remote: Total 4 (delta 0), reused 0 (delta 0), pack-reused 0<br>
+Desempaquetando objetos: 100% (4/4), listo.<br>
+Desde <a href="https://github.com/canrosss/Apuntes" title="https://github.com/canrosss/Apuntes" class="https">https://github.com/canrosss/Apuntes</a><br>
+ * [nueva rama]      master     -&gt; origin/master<br>
+⬤ [/home/canros/Notebooks/Apuntes/build]         
+</p>
+
+<p>
+git pull origin master --allow-unrelated-histories
+</p>
+
+<p>
+⬤ [/home/canros/Notebooks/Apuntes/build]  git push origin master<br>
+Contando objetos: 40, listo.<br>
+Delta compression using up to 4 threads.<br>
+Comprimiendo objetos: 100% (39/39), listo.<br>
+Escribiendo objetos: 100% (40/40), 2.65 MiB | 365.00 KiB/s, listo.<br>
+Total 40 (delta 4), reused 0 (delta 0)<br>
+remote: Resolving deltas: 100% (4/4), done.<br>
+To <a href="https://github.com/canrosss/Apuntes.git" title="https://github.com/canrosss/Apuntes.git" class="https">https://github.com/canrosss/Apuntes.git</a><br>
+   d30c61b..fd7b3d8  master -&gt; master<br>
+⬤ [/home/canros/Notebooks/Apuntes/build]    
+</p>
+
+<br>
+<br>
+
+<p>
+git remote add origin <a href="https://github.com/canrosss/Apuntes.git" title="https://github.com/canrosss/Apuntes.git" class="https">https://github.com/canrosss/Apuntes.git</a><br>
+# Set a new remote
+</p>
+
+<p>
+# Verify new remote<br>
+origin  <a href="https://github.com/user/repo.git" title="https://github.com/user/repo.git" class="https">https://github.com/user/repo.git</a> (fetch)<br>
+origin  <a href="https://github.com/user/repo.git" title="https://github.com/user/repo.git" class="https">https://github.com/user/repo.git</a> (push)
+</p>
+
+<p>
+---<br>
+En caso de haber enviado cambios desde otro repo!<br>
+<a href="https://es.stackoverflow.com/questions/90567/git-push-falla-porque-otro-desarrollador-subi%C3%B3-cambios" title="https://es.stackoverflow.com/questions/90567/git-push-falla-porque-otro-desarrollador-subi%C3%B3-cambios" class="https">https://es.stackoverflow.com/questions/90567/git-push-falla-porque-otro-desarrollador-subi%C3%B3-cambios</a>
+</p>
+
+<p>
+Resumen (asumiendo que estás en master):<br>
+Si no te importa crear un commit de merge, entonces esto alcanza:
+</p>
+
+<p>
+git pull<br>
+git push<br>
+Si preferís evitar el commit de merge:
+</p>
+
+<p>
+git fetch<br>
+git rebase origin/master<br>
+git push<br>
+Explicación<br>
+En git, un commit es el estado de todo el repositorio en un momento dado. Además, cada desarrollador tiene una copia de todo y (si usan algo como github) existe un repositorio central. En este escenario, todos los desarrolladores hacen git pull y git push al repositorio central y ese es el único remoto. Entonces, imaginemos que inicialmente el estado de tu repositorio remoto es:
+</p>
+
+<p>
+<img src="../img/Fhi1n.png">
+</p>
+
+<br>
+
+<p>
+y que hiciste git pull sin problemas. Tu repositorio local tiene exactamente el mismo contenido que el repositorio remoto.
+</p>
+
+<p>
+Vos estás trabajando feliz, pero Martín (otro desarrollador del equipo) hace git push... entonces el estado del repositorio remoto pasa a ser este:
+</p>
+
+<p>
+<img src="../img/CF3oK.png">
+</p>
+
+<p>
+vos terminás de trabajar en el bug que estás arreglando y hacés git commit... en ese momento, en tu repositorio local tenés lo siguiente:
+</p>
+
+<p>
+<img src="../img/GCJc9.png">
+</p>
+
+<p>
+hasta ahí, todo perfecto... pero cuando hacés git push, falla con el mensaje de error de la pregunta. Esto pasa porque git no sabe qué hacer con el commit 4... supuestamente va después del commit 2, pero en el repositorio remoto, está el 3 después del 2.
+</p>
+
+<p>
+La versión común<br>
+Una opción es hacer:
+</p>
+
+<p>
+git pull<br>
+Esto lo que hace es traer los cambios del repositorio remoto a tu equipo e intentar hacer un merge. Si no hay conflictos, el estado final en tu equipo es el siguiente:
+</p>
+
+<p>
+<img src="../img/2kf2d.png">
+</p>
+
+<p>
+el próximo paso es subir tus cambios al remoto haciendo:
+</p>
+
+<p>
+git push<br>
+y si el molesto de Martín no subió otro cambio, entonces va a funcionar sin problemas. Si falla por la misma razón, basta con repetir el procedimiento.
+</p>
+
+<p>
+La versión de la brigada anti-merge<br>
+Somos varios los que vemos con malos ojos tener muchos commits de merge. Por qué? porque no agregan información. Por suerte, para los loquitos como yo, existe una forma de hacer casi lo mismo pero más prolijo.
+</p>
+
+<p>
+Primero ejecutamos:
+</p>
+
+<p>
+git fetch<br>
+git fetch trae los cambios del remoto pero sin tocar las branches... una vez que hacés git fetch, esto es lo que queda en tu repositorio:
+</p>
+
+<p>
+<img src="../img/K2wjE.png">
+</p>
+
+<p>
+esto quiere decir que:
+</p>
+
+<p>
+master (la branch en la que trabajás normalmente) sigue apuntando a tu commit<br>
+git sabe que el remoto (origin/master) apunta al commit 3<br>
+si mirás el código en tu equipo, no vas a ver rastros del commit 3<br>
+entonces... el paso mágico es:
+</p>
+
+<p>
+git rebase origin/master<br>
+cuando escribís eso, git se para en origin/master (el commit 3) y repite los cambios que se hicieron dentro del commit 4. Si no hay conflictos el resultado es el siguiente:
+</p>
+
+<p>
+<img src="../img/LJGrp.png">
+</p>
+
+<p>
+es importante destacar que ya no hay commit 4... tenemos un commit 5 que es "casi casi" como el 4, pero diferente (porque apunta al commit 3, tiene otro padre... y eso ya es suficiente para que sea otro).
+</p>
+
+<p>
+si hay conflictos, vas a tener que corregirlos (la consola te dice bien qué archivos son los que hay que arreglar), agregarlos (usando git add) y finalmente seguir con el rebase (usando git rebase --continue).
+</p>
+
+<p>
+Por último, es necesario subir los cambios al remoto (eso era lo que querías hacer desde el primer momento, no?). Para eso:
+</p>
+
+<p>
+git push<br>
+Y listo!
+</p>
+
+<p>
+Los conflictos existen y van a existir siempre (independientemente de que hagas un commit de merge o no). En lo personal, prefiero evitar los commits de merge a toda costa.
+</p>
+
+<p>
+Y te dejo con una última imagen para que veas por qué puede estar bueno evitar commits de merge... sin commits de merge, la estructura de la branch queda mucho más clara:
+</p>
+
+<p>
+<img src="../img/LF8Ys.png">
+</p>
+
+<br>
+
+
+            </div>
+            <div class="fade fade-bottom"></div>
+          </section>
+
+          <footer>
+              <a href="#" class="scrollToTop" title="Back to top"><i class="icon icon-uploadalt"></i></a>
+          </footer>
+        </article>
+      </div>
+    </main>
+  </div>
+
+  <script src="../_resources/js/jquery.v2.1.3.min.js"></script>
+  <script src="../_resources/js/index.js"></script>
+
+</body>
+</html>

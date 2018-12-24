@@ -1,0 +1,106 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2018-12-23T01:43:25-06:00
+
+====== 2) Git Comandos ======
+Created domingo 23 diciembre 2018
+
+===== ¿Cómo iniciar un repostorio de GitHub? =====
+
+Primero hay que logearse en https://github.com/ y buscar la opción de "New repository".
+{{../../img/Crear-repo.png}}
+
+Despues hay que llenar los datos básicos como nombrar un repositorio
+{{./pasted_image.png}}
+
+Al finalizar, damos en "Create repository"
+
+{{./pasted_image001.png}}
+
+Ahora creamos en nuestro disco un directorio donde inicializaremos el repositorio y posteriormente lo vamos a conectar a GitHub.
+{{./pasted_image002.png?height=532}}
+
+Ahora entramos al directorio nuevo al cual vamos a nombrar "**MiRepo**"
+
+{{./pasted_image003.png}}
+
+Ya desde una terminal, vamos a teclear estos comandos
+{{./pasted_image004.png}}
+
+==== Comandos ====
+git init
+{{./pasted_image005.png}}
+git add .
+git commit -m "First commit"
+{{./pasted_image006.png}}
+
+Y ahora debemos añadir el origen remoto de nuestro repositorio de GitHub
+
+{{./pasted_image007.png}}
+
+git remote add origin https://github.com/canrosss/MiRepo.git
+
+Bien, todo parecía ir bien y al hacer el push para subir los cambios al remoto, se queja. 
+
+{{./pasted_image008.png}}
+
+Rechaza el cambio que he hecho, me dice que hay cambios que no están en el local y me recomienda que primero actualice mi copia de trabajo con esos cambios. Sus deseos son órdenes.
+
+git fetch origin
+{{./pasted_image009.png}}
+
+git pull origin master --allow-unrelated-histories
+git push origin master
+
+{{./pasted_image010.png}}
+
+Ahora todo esta sync.
+
+==== RESUMEN DE COMANDOS ====
+
+Initialize the local directory as a Git repository.
+git init
+git add .
+git commit -m "First commit"
+git remote add origin https://github.com/canrosss/Apuntes.git
+git remote -v
+git push origin master
+
+Bien, todo parecía ir bien y al hacer el push para subir los cambios al remoto, se queja. Rechaza el cambio que he hecho, me dice que hay cambios que no están en el local y me recomienda que primero actualice mi copia de trabajo con esos cambios. Sus deseos son órdenes.
+
+~/proyectos/proyecto-nuevo> git fetch origin
+
+⬤ [/home/canros/Notebooks/Apuntes/build]  git fetch origin 1:17:27  ☁  master ☀
+warning: no hay commits comunes
+remote: Enumerating objects: 4, done.
+remote: Counting objects: 100% (4/4), done.
+remote: Compressing objects: 100% (3/3), done.
+remote: Total 4 (delta 0), reused 0 (delta 0), pack-reused 0
+Desempaquetando objetos: 100% (4/4), listo.
+Desde https://github.com/canrosss/Apuntes
+ * [nueva rama]      master     -> origin/master
+⬤ [/home/canros/Notebooks/Apuntes/build]         
+
+git pull origin master --allow-unrelated-histories
+
+⬤ [/home/canros/Notebooks/Apuntes/build]  git push origin master
+Contando objetos: 40, listo.
+Delta compression using up to 4 threads.
+Comprimiendo objetos: 100% (39/39), listo.
+Escribiendo objetos: 100% (40/40), 2.65 MiB | 365.00 KiB/s, listo.
+Total 40 (delta 4), reused 0 (delta 0)
+remote: Resolving deltas: 100% (4/4), done.
+To https://github.com/canrosss/Apuntes.git
+   d30c61b..fd7b3d8  master -> master
+⬤ [/home/canros/Notebooks/Apuntes/build]    
+
+
+
+git remote add origin https://github.com/canrosss/Apuntes.git
+# Set a new remote
+
+# Verify new remote
+origin  https://github.com/user/repo.git (fetch)
+origin  https://github.com/user/repo.git (push)
+
+

@@ -1,0 +1,27 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2018-12-12T23:30:01-06:00
+
+====== Home ======
+Created miércoles 12 diciembre 2018
+
+====== SetEnvironment ======
+Este script sirve para crear cargar la configuración del ambiente
+
+--------------------
+
+#!/bin/bash
+eval "$(rbenv init -)"
+version="2.5.0"
+echo "------------------------------------"
+echo "Ejecutando comandos rbenv para programar"
+echo "-------------------------------------"
+
+rbenv shell $version
+echo "Configurando rbenv shell con $version"
+rbenv global $version
+echo "Configurando rbenv global con $version"
+rbenv rehash
+echo "Configurando rbenv rehash"
+
+--------------------

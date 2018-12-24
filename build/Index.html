@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<!-- based on a Pen by Devilish Alchemist @ http://codepen.io/devilishalchemist/pen/LERvpM -->
+<head>
+  <meta charset="UTF-8">
+  <title>Home</title>
+
+  <link rel="stylesheet" href="./_resources/css/normalize.min.css">
+  <link rel="stylesheet" href="./_resources/css/whhg.css">
+  <link rel="stylesheet" href="./_resources/css/fonts.css">
+  <link rel="stylesheet" href="./_resources/css/style.css">
+
+</head>
+
+<body>
+  <div class="page">
+
+    <span id="view-toc" class="tooltip">&laquo; view index</span>
+    <span id="view-content" class="tooltip">return to content &raquo;</span>
+    <span id="view-next" class="tooltip">next page &raquo;</span>
+    <span id="view-prev" class="tooltip">&laquo; previous page</span>
+
+    <span class="menu_toggle">
+      <i class="menu_open icon icon-th-list"></i>
+      <i class="menu_close icon icon-import"></i>
+    </span>
+
+    <div id="navigation">
+      <ul>
+<li><a href="./Home.html" title="Home" class="page">Home</a></li>
+<li><b>Index</b></li>
+<li><a href="./Personalización_de_GnomeShell.html" title="Personalización de GnomeShell" class="page">Personalización de GnomeShell</a></li>
+<li><a href="./Referencias.html" title="Referencias" class="page">Referencias</a></li>
+<li><a href="./Ruby.html" title="Ruby" class="page">Ruby</a></li>
+</ul>
+
+      <span class="zimversion">
+        <small>built with</small><br><strong>Zim 0.68-rc1</strong>
+        <br>
+        --
+        <br>
+        <a href="https://github.com/scar45/ResponsivePivot">template<br> on Github<br><i class="icon icon-github"></i></a>
+      </span>
+    </div>
+
+    <main class="content">
+      <div class="content_inner">
+        <article>
+          <header>
+            <a id="navPrev" href='./Home/2)_Git_Comandos.html'><span><i class="icon icon-chevron-left"></i></span></a>
+
+            <a id="navHome" href='./Home.html'><span><i class="icon icon-homealt"></i></span></a>
+
+            <a id="navNext" href='./Personalización_de_GnomeShell.html'><span><i class="icon icon-chevron-right"></i></span></a>
+          </header>
+
+          <section>
+            <div class="page-title">
+              <h1><i class="icon icon-bookmarkalt"></i> Home <a name='Index'></a></h1>
+            </div>
+            <div class="fade fade-top"></div>
+            <div class="page-body">
+              <p>
+Created miércoles 12 diciembre 2018
+</p>
+
+<h1>SetEnvironment</h1>
+
+<p>
+Este script sirve para crear cargar la configuración del ambiente
+</p>
+
+
+<hr>
+
+<br>
+
+<p>
+#!/bin/bash<br>
+eval "$(rbenv init -)"<br>
+version="2.5.0"<br>
+echo "------------------------------------"<br>
+echo "Ejecutando comandos rbenv para programar"<br>
+echo "-------------------------------------"
+</p>
+
+<p>
+rbenv shell $version<br>
+echo "Configurando rbenv shell con $version"<br>
+rbenv global $version<br>
+echo "Configurando rbenv global con $version"<br>
+rbenv rehash<br>
+echo "Configurando rbenv rehash"
+</p>
+
+
+<hr>
+
+
+            </div>
+            <div class="fade fade-bottom"></div>
+          </section>
+
+          <footer>
+              <a href="#" class="scrollToTop" title="Back to top"><i class="icon icon-uploadalt"></i></a>
+          </footer>
+        </article>
+      </div>
+    </main>
+  </div>
+
+  <script src="./_resources/js/jquery.v2.1.3.min.js"></script>
+  <script src="./_resources/js/index.js"></script>
+
+</body>
+</html>
