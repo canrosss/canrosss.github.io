@@ -1,8 +1,0 @@
-Content-Type: text/x-zim-wiki
-Wiki-Format: zim 0.4
-Creation-Date: 2018-12-22T23:49:57-06:00
-
-====== Home ======
-Created sábado 22 diciembre 2018
-
-[[~/Notebooks/Apuntes/build/Home/2)_Git_Comandos.html|1. Cómo trabajar con GitHub (Guía Básica)]]
