@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TicTacToe — README</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;700;900&display=swap');
+
+  :root {
+    --bg: #0a0e1a;
+    --panel: #0f1628;
+    --border: #1e3a5f;
+    --accent: #00d4ff;
+    --accent2: #ff6b35;
+    --accent3: #7fff6b;
+    --text: #c8e0f0;
+    --dim: #4a6a8a;
+    --glow: 0 0 20px rgba(0,212,255,0.3);
+  }
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Share Tech Mono', monospace;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content:'';
+    position:fixed;
+    inset:0;
+    background-image:
+      linear-gradient(rgba(0,212,255,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,212,255,0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events:none;
+    z-index:0;
+  }
+
+  /* ── HEADER ── */
+  header {
+    position:relative;
+    z-index:1;
+    text-align:center;
+    padding: 60px 20px 40px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .version-badge {
+    display:inline-block;
+    padding: 4px 14px;
+    border: 1px solid var(--accent2);
+    color: var(--accent2);
+    font-size: 10px;
+    letter-spacing: 3px;
+    margin-bottom: 20px;
+    animation: pulse 2.5s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%,100% { box-shadow: 0 0 6px rgba(255,107,53,0.2); }
+    50%      { box-shadow: 0 0 18px rgba(255,107,53,0.5); }
+  }
+
+  h1 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: clamp(36px, 7vw, 72px);
+    font-weight: 900;
+    color: #fff;
+    text-shadow: 0 0 40px rgba(0,212,255,0.5);
+    letter-spacing: 8px;
+    line-height: 1;
+  }
+
+  h1 span { color: var(--accent); }
+
+  .tagline {
+    margin-top: 16px;
+    font-size: 13px;
+    color: var(--dim);
+    letter-spacing: 2px;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.8;
+  }
+
+  .header-badges {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 24px;
+    flex-wrap: wrap;
+  }
+
+  .badge {
+    padding: 5px 14px;
+    font-size: 10px;
+    letter-spacing: 2px;
+    border: 1px solid;
+  }
+  .badge-java    { border-color:#b06bff; color:#b06bff; background:rgba(176,107,255,0.08); }
+  .badge-console { border-color:var(--accent3); color:var(--accent3); background:rgba(127,255,107,0.06); }
+  .badge-dev     { border-color:var(--accent2); color:var(--accent2); background:rgba(255,107,53,0.08); }
+
+  /* ── NAV ── */
+  nav {
+    position:relative;
+    z-index:1;
+    display:flex;
+    justify-content:center;
+    gap:6px;
+    padding:20px;
+    flex-wrap:wrap;
+    border-bottom:1px solid var(--border);
+  }
+
+  .tab {
+    padding:9px 18px;
+    border:1px solid var(--border);
+    background:var(--panel);
+    color:var(--dim);
+    font-family:'Share Tech Mono',monospace;
+    font-size:11px;
+    letter-spacing:2px;
+    cursor:pointer;
+    transition:all 0.2s;
+    text-transform:uppercase;
+  }
+  .tab:hover { border-color:var(--accent); color:var(--accent); }
+  .tab.active { border-color:var(--accent); color:var(--bg); background:var(--accent); box-shadow:var(--glow); }
+
+  /* ── SECTIONS ── */
+  .section {
+    display:none;
+    position:relative;
+    z-index:1;
+    padding:36px 40px 80px;
+    max-width:960px;
+    margin:0 auto;
+    animation:fadeIn 0.3s ease;
+  }
+  .section.active { display:block; }
+
+  @keyframes fadeIn {
+    from { opacity:0; transform:translateY(8px); }
+    to   { opacity:1; transform:translateY(0); }
+  }
+
+  .section-title {
+    font-family:'Orbitron',sans-serif;
+    font-size:16px;
+    color:var(--accent);
+    letter-spacing:3px;
+    margin-bottom:6px;
+  }
+
+  .section-desc {
+    font-size:12px;
+    color:var(--dim);
+    margin-bottom:28px;
+    letter-spacing:1px;
+    line-height:1.9;
+  }
+
+  /* ── CARDS ── */
+  .card {
+    background:var(--panel);
+    border:1px solid var(--border);
+    padding:24px 28px;
+    margin-bottom:20px;
+    position:relative;
+  }
+  .card::before {
+    content:'';
+    position:absolute;
+    top:0;left:0;
+    width:3px;height:100%;
+    background:var(--accent);
+  }
+  .card.green::before  { background:var(--accent3); }
+  .card.orange::before { background:var(--accent2); }
+  .card.purple::before { background:#b06bff; }
+
+  .card-label {
+    font-size:10px;
+    letter-spacing:3px;
+    color:var(--dim);
+    text-transform:uppercase;
+    margin-bottom:14px;
+  }
+
+  /* ── ABOUT ── */
+  .about-text {
+    font-size:13px;
+    color:var(--text);
+    line-height:2;
+  }
+
+  .about-text strong { color:var(--accent); }
+
+  /* ── REQUIREMENTS ── */
+  .req-item {
+    display:flex;
+    align-items:center;
+    gap:14px;
+    padding:14px 0;
+    border-bottom:1px solid var(--border);
+    font-size:13px;
+  }
+  .req-item:last-child { border-bottom:none; }
+  .req-icon {
+    width:36px;height:36px;
+    border:1px solid var(--border);
+    display:flex;align-items:center;justify-content:center;
+    font-size:16px;
+    flex-shrink:0;
+    color:var(--accent);
+    font-family:'Orbitron',sans-serif;
+    font-size:10px;
+    letter-spacing:1px;
+  }
+  .req-name  { color:#fff; font-size:13px; }
+  .req-ver   { color:var(--dim); font-size:11px; margin-top:2px; }
+
+  /* ── FILE TREE ── */
+  .tree {
+    background:#070b14;
+    border:1px solid var(--border);
+    padding:22px 24px;
+    font-size:13px;
+    line-height:2.2;
+    overflow-x:auto;
+  }
+  .tree-root  { color:var(--accent3); }
+  .tree-dir   { color:var(--accent); }
+  .tree-file  { color:var(--text); }
+  .tree-desc  { color:var(--dim); }
+  .tree-indent{ padding-left:20px; display:block; }
+
+  /* ── HOW TO PLAY ── */
+  .steps { display:flex; flex-direction:column; gap:12px; }
+
+  .step {
+    display:flex;
+    align-items:flex-start;
+    gap:16px;
+    background:var(--panel);
+    border:1px solid var(--border);
+    padding:16px 20px;
+    transition:border-color 0.2s;
+  }
+  .step:hover { border-color:var(--accent); }
+
+  .step-num {
+    font-family:'Orbitron',sans-serif;
+    font-size:20px;
+    font-weight:900;
+    color:var(--accent);
+    min-width:32px;
+    line-height:1;
+    padding-top:2px;
+  }
+  .step-text { font-size:13px; color:var(--text); line-height:1.8; }
+  .step-text code { color:var(--accent2); background:rgba(255,107,53,0.1); padding:1px 6px; }
+
+  /* ── BOARD ── */
+  .board-wrap {
+    display:flex;
+    justify-content:center;
+    margin: 20px 0 28px;
+  }
+
+  .board-grid {
+    display:inline-grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:4px;
+    background:var(--border);
+    padding:4px;
+    border:1px solid var(--accent);
+    box-shadow: var(--glow);
+  }
+
+  .cell {
+    width:80px;height:80px;
+    background:var(--panel);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Orbitron',sans-serif;
+    font-size:28px;
+    font-weight:900;
+    color:var(--dim);
+    transition:all 0.2s;
+    cursor:default;
+    position:relative;
+  }
+  .cell.H { color:var(--accent); text-shadow:0 0 16px rgba(0,212,255,0.6); }
+  .cell.M { color:var(--accent2); text-shadow:0 0 16px rgba(255,107,53,0.6); }
+
+  .legend {
+    display:flex;
+    justify-content:center;
+    gap:24px;
+    flex-wrap:wrap;
+    margin-bottom:10px;
+  }
+  .legend-item { display:flex; align-items:center; gap:8px; font-size:12px; }
+  .legend-dot {
+    width:12px;height:12px;
+    border:1px solid;
+  }
+  .legend-dot.H { border-color:var(--accent); background:rgba(0,212,255,0.2); }
+  .legend-dot.M { border-color:var(--accent2); background:rgba(255,107,53,0.2); }
+  .legend-dot.E { border-color:var(--dim); background:transparent; }
+
+  /* ── STATUS ── */
+  .status-bar {
+    display:flex;
+    align-items:center;
+    gap:14px;
+    padding:18px 22px;
+    background:var(--panel);
+    border:1px solid var(--border);
+    margin-bottom:20px;
+  }
+
+  .status-dot {
+    width:10px;height:10px;
+    border-radius:50%;
+    background:var(--accent2);
+    animation:blink 1.4s ease-in-out infinite;
+    flex-shrink:0;
+  }
+  @keyframes blink {
+    0%,100%{ opacity:1; } 50%{ opacity:0.2; }
+  }
+
+  .status-text { font-size:13px; color:var(--text); }
+  .status-ver  { font-family:'Orbitron',sans-serif; font-size:11px; color:var(--accent2); margin-left:auto; }
+
+  .known-issues { display:flex; flex-direction:column; gap:8px; }
+  .issue {
+    display:flex;gap:12px;align-items:flex-start;
+    padding:12px 16px;
+    border:1px solid;
+    font-size:12px;
+    line-height:1.7;
+  }
+  .issue.critical { border-color:rgba(255,107,53,0.3); background:rgba(255,107,53,0.05); }
+  .issue.warn     { border-color:rgba(255,215,0,0.3);  background:rgba(255,215,0,0.04); }
+  .issue-tag { font-size:9px; letter-spacing:2px; white-space:nowrap; margin-top:2px; }
+  .issue.critical .issue-tag { color:var(--accent2); }
+  .issue.warn     .issue-tag { color:#ffd700; }
+
+  /* ── SCROLLBAR ── */
+  ::-webkit-scrollbar { width:6px; height:6px; }
+  ::-webkit-scrollbar-track { background:var(--bg); }
+  ::-webkit-scrollbar-thumb { background:var(--border); }
+  ::-webkit-scrollbar-thumb:hover { background:var(--accent); }
+
+  code { font-family:'Share Tech Mono',monospace; }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════ HEADER ═══════════════════════════════ -->
+<header>
+  <div class="version-badge">VERSION 0.1 — EN DESARROLLO</div>
+  <h1>TIC<span>TAC</span>TOE</h1>
+  <p class="tagline">
+    Proyecto de prueba creado para retomar el aprendizaje de Java.<br>
+    Tres en raya para consola · Jugador humano vs IA · Tablero 3x3
+  </p>
+  <div class="header-badges">
+    <span class="badge badge-java">Java JDK 22+</span>
+    <span class="badge badge-console">Console App</span>
+    <span class="badge badge-dev">com.canrossoft</span>
+  </div>
+</header>
+
+<!-- ═══════════════════════════════ NAV ═══════════════════════════════ -->
+<nav>
+  <button class="tab active" onclick="show('about')">Descripcion</button>
+  <button class="tab" onclick="show('requisitos')">Requisitos</button>
+  <button class="tab" onclick="show('estructura')">Estructura</button>
+  <button class="tab" onclick="show('jugar')">Como Jugar</button>
+  <button class="tab" onclick="show('tablero')">Tablero</button>
+  <button class="tab" onclick="show('estado')">Estado</button>
+</nav>
+
+<!-- ═══════════════════════════════ ABOUT ═══════════════════════════════ -->
+<div id="about" class="section active">
+  <div class="section-title">// DESCRIPCION</div>
+  <div class="section-desc">Informacion general del proyecto.</div>
+
+  <div class="card">
+    <div class="card-label">Acerca del proyecto</div>
+    <p class="about-text">
+      <strong>TicTacToe</strong> es un proyecto de consola en Java creado para retomar y practicar
+      los fundamentos del lenguaje. El juego enfrenta a un jugador humano contra
+      una <strong>IA (Robotnik)</strong> en un tablero clasico de <strong>3x3</strong>.<br><br>
+      El objetivo es ser el primero en alinear tres marcas consecutivas en fila,
+      columna o diagonal antes que el oponente.
+    </p>
+  </div>
+
+  <div class="card green">
+    <div class="card-label">Caracteristicas actuales</div>
+    <p class="about-text">
+      · Partida completa jugador vs IA en consola<br>
+      · Validacion de coordenadas dentro del tablero<br>
+      · Efecto de escritura estilo maquina de escribir (Teletype)<br>
+      · Guardado de resultados en <code>scores.json</code> via Gson<br>
+      · Deteccion parcial de ganador (en desarrollo)
+    </p>
+  </div>
+
+  <div class="card orange">
+    <div class="card-label">Dependencias externas</div>
+    <p class="about-text">
+      · <strong style="color:var(--accent2)">gson-2.10.1</strong> — Serializacion y deserializacion de partidas a JSON
+    </p>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════ REQUISITOS ═══════════════════════════════ -->
+<div id="requisitos" class="section">
+  <div class="section-title">// REQUISITOS</div>
+  <div class="section-desc">Software necesario para compilar y ejecutar el proyecto.</div>
+
+  <div class="card">
+    <div class="card-label">Entorno de ejecucion</div>
+    <div class="req-item">
+      <div class="req-icon">JDK</div>
+      <div>
+        <div class="req-name">Java Development Kit</div>
+        <div class="req-ver">Version 22 o superior · requerido para compilar y ejecutar</div>
+      </div>
+    </div>
+    <div class="req-item">
+      <div class="req-icon">IDE</div>
+      <div>
+        <div class="req-name">IntelliJ IDEA</div>
+        <div class="req-ver">Recomendado · cualquier version Community o Ultimate</div>
+      </div>
+    </div>
+    <div class="req-item">
+      <div class="req-icon">LIB</div>
+      <div>
+        <div class="req-name">gson-2.10.1.jar</div>
+        <div class="req-ver">Incluido en External Libraries del proyecto IntelliJ</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card purple">
+    <div class="card-label">Ejecucion rapida</div>
+    <p class="about-text">
+      1. Abre la carpeta del proyecto en IntelliJ IDEA.<br>
+      2. Asegurate de que <strong style="color:#b06bff">gson-2.10.1.jar</strong> este marcado como libreria.<br>
+      3. Ejecuta <code style="color:#b06bff">TicTacToe.java</code> con Run o Shift+F10.
+    </p>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════ ESTRUCTURA ═══════════════════════════════ -->
+<div id="estructura" class="section">
+  <div class="section-title">// ESTRUCTURA DEL PROYECTO</div>
+  <div class="section-desc">Organizacion de paquetes y archivos fuente.</div>
+
+  <div class="card">
+    <div class="card-label">Arbol de directorios — src/</div>
+    <div class="tree">
+      <span class="tree-root">src/com/canrossoft/tictactoe/</span>
+      <span class="tree-indent">
+        <span class="tree-file">├── TicTacToe.java</span>
+        <span class="tree-desc">        — Punto de entrada principal</span><br>
+        <span class="tree-dir">├── model/</span><br>
+        <span class="tree-indent">
+          <span class="tree-file">│   ├── Board.java</span>
+          <span class="tree-desc">       — Logica del tablero 3x3</span><br>
+          <span class="tree-file">│   └── Player.java</span>
+          <span class="tree-desc">      — Modelo del jugador</span>
+        </span><br>
+        <span class="tree-dir">├── ai/</span><br>
+        <span class="tree-indent">
+          <span class="tree-file">│   └── IA.java</span>
+          <span class="tree-desc">          — Jugador controlado por la IA</span>
+        </span><br>
+        <span class="tree-dir">├── score/</span><br>
+        <span class="tree-indent">
+          <span class="tree-file">│   └── ScoreManager.java</span>
+          <span class="tree-desc"> — Guardado de resultados en JSON</span>
+        </span><br>
+        <span class="tree-dir">└── ui/</span><br>
+        <span class="tree-indent">
+          <span class="tree-file">    ├── ConsoleUI.java</span>
+          <span class="tree-desc">   — Interfaz de consola</span><br>
+          <span class="tree-file">    └── Teletype.java</span>
+          <span class="tree-desc">    — Salida con efecto maquina de escribir</span>
+        </span>
+      </span>
+    </div>
+  </div>
+
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;margin-top:4px;">
+    <div class="card" style="margin-bottom:0">
+      <div class="card-label">model/</div>
+      <p class="about-text" style="font-size:12px;">
+        <strong>Board.java</strong> — Tablero 3x3, inicializacion, renderizado y deteccion de ganador.<br><br>
+        <strong>Player.java</strong> — Atributos del jugador, validacion de posicion y marcado en el tablero.
+      </p>
+    </div>
+    <div class="card green" style="margin-bottom:0">
+      <div class="card-label">ai/</div>
+      <p class="about-text" style="font-size:12px;">
+        <strong>IA.java</strong> — Extiende Player. Actualmente hereda toda la logica de movimiento. Pendiente: implementar estrategia propia.
+      </p>
+    </div>
+    <div class="card orange" style="margin-bottom:0">
+      <div class="card-label">score/</div>
+      <p class="about-text" style="font-size:12px;">
+        <strong>ScoreManager.java</strong> — Guarda y carga resultados desde <code>scores.json</code> usando Gson. Incluye clase interna <code>GameRecord</code>.
+      </p>
+    </div>
+    <div class="card purple" style="margin-bottom:0">
+      <div class="card-label">ui/</div>
+      <p class="about-text" style="font-size:12px;">
+        <strong>ConsoleUI.java</strong> — Mensajes de bienvenida y prompts al jugador.<br><br>
+        <strong>Teletype.java</strong> — Imprime texto caracter a caracter con delay para efecto retro.
+      </p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════ COMO JUGAR ═══════════════════════════════ -->
+<div id="jugar" class="section">
+  <div class="section-title">// COMO JUGAR</div>
+  <div class="section-desc">Instrucciones paso a paso para iniciar y jugar una partida.</div>
+
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">01</div>
+      <div class="step-text">Abre el proyecto en <strong>IntelliJ IDEA</strong>.</div>
+    </div>
+    <div class="step">
+      <div class="step-num">02</div>
+      <div class="step-text">Ejecuta <code>TicTacToe.java</code> con Run o <code>Shift + F10</code>.</div>
+    </div>
+    <div class="step">
+      <div class="step-num">03</div>
+      <div class="step-text">Ingresa tu nombre cuando el juego te lo pida. Si dejas el campo vacio, se usara <code>Pepito</code> como nombre por defecto.</div>
+    </div>
+    <div class="step">
+      <div class="step-num">04</div>
+      <div class="step-text">En cada turno introduce las coordenadas <code>X</code> e <code>Y</code> (valores entre <code>0</code> y <code>2</code>) para marcar tu posicion en el tablero.</div>
+    </div>
+    <div class="step">
+      <div class="step-num">05</div>
+      <div class="step-text">La <strong>IA (Robotnik)</strong> respondera automaticamente con su movimiento.</div>
+    </div>
+    <div class="step">
+      <div class="step-num">06</div>
+      <div class="step-text">Gana el primero en alinear <strong>tres marcas</strong> consecutivas en fila, columna o diagonal.</div>
+    </div>
+    <div class="step">
+      <div class="step-num">07</div>
+      <div class="step-text">El resultado se guarda automaticamente en <code>scores.json</code> al terminar la partida.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════ TABLERO ═══════════════════════════════ -->
+<div id="tablero" class="section">
+  <div class="section-title">// TABLERO</div>
+  <div class="section-desc">Representacion del tablero 3x3 y significado de las marcas.</div>
+
+  <div class="card">
+    <div class="card-label">Representacion visual interactiva</div>
+
+    <div class="board-wrap">
+      <div>
+        <div style="display:flex;gap:4px;margin-bottom:4px;padding-left:4px;">
+          <div style="width:80px;text-align:center;font-size:10px;color:var(--dim);letter-spacing:2px;">COL 0</div>
+          <div style="width:80px;text-align:center;font-size:10px;color:var(--dim);letter-spacing:2px;">COL 1</div>
+          <div style="width:80px;text-align:center;font-size:10px;color:var(--dim);letter-spacing:2px;">COL 2</div>
+        </div>
+        <div style="display:flex;gap:6px;align-items:center;">
+          <div style="display:flex;flex-direction:column;gap:4px;margin-right:4px;">
+            <div style="height:80px;display:flex;align-items:center;font-size:10px;color:var(--dim);letter-spacing:1px;">ROW 0</div>
+            <div style="height:80px;display:flex;align-items:center;font-size:10px;color:var(--dim);letter-spacing:1px;">ROW 1</div>
+            <div style="height:80px;display:flex;align-items:center;font-size:10px;color:var(--dim);letter-spacing:1px;">ROW 2</div>
+          </div>
+          <div class="board-grid" id="demo-board">
+            <div class="cell H">H</div>
+            <div class="cell">.</div>
+            <div class="cell">.</div>
+            <div class="cell">.</div>
+            <div class="cell M">M</div>
+            <div class="cell">.</div>
+            <div class="cell">.</div>
+            <div class="cell">.</div>
+            <div class="cell H">H</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="legend">
+      <div class="legend-item"><div class="legend-dot H"></div><span style="color:var(--accent)">H — Marca del jugador humano</span></div>
+      <div class="legend-item"><div class="legend-dot M"></div><span style="color:var(--accent2)">M — Marca de la IA (Robotnik)</span></div>
+      <div class="legend-item"><div class="legend-dot E"></div><span style="color:var(--dim)">. — Casilla vacia</span></div>
+    </div>
+  </div>
+
+  <div class="card green">
+    <div class="card-label">Representacion en consola</div>
+    <div class="tree">
+<span style="color:var(--dim)">  ---0------1------2---</span>
+<span style="color:var(--text)">0 |  <span style="color:var(--dim)">.</span>  |  <span style="color:var(--dim)">.</span>  |  <span style="color:var(--dim)">.</span>  |</span>
+<span style="color:var(--text)">1 |  <span style="color:var(--dim)">.</span>  |  <span style="color:var(--dim)">.</span>  |  <span style="color:var(--dim)">.</span>  |</span>
+<span style="color:var(--text)">2 |  <span style="color:var(--dim)">.</span>  |  <span style="color:var(--dim)">.</span>  |  <span style="color:var(--dim)">.</span>  |</span>
+<span style="color:var(--dim)">  ---------------------</span>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════ ESTADO ═══════════════════════════════ -->
+<div id="estado" class="section">
+  <div class="section-title">// ESTADO ACTUAL</div>
+  <div class="section-desc">Version en desarrollo activo. Issues conocidos y proximas tareas.</div>
+
+  <div class="status-bar">
+    <div class="status-dot"></div>
+    <span class="status-text">Proyecto en desarrollo activo</span>
+    <span class="status-ver">v0.1</span>
+  </div>
+
+  <div class="card orange">
+    <div class="card-label">Issues conocidos</div>
+    <div class="known-issues">
+      <div class="issue critical">
+        <span class="issue-tag">CRITICO</span>
+        <span>ArrayIndexOutOfBoundsException en checkBoard() — acceso a indices fuera del rango del tablero 3x3.</span>
+      </div>
+      <div class="issue critical">
+        <span class="issue-tag">CRITICO</span>
+        <span>checkBoard() incompleto — solo verifica la primera fila. Faltan columnas, diagonales y filas 2 y 3.</span>
+      </div>
+      <div class="issue warn">
+        <span class="issue-tag">WARN</span>
+        <span>Sin manejo de InputMismatchException — ingresar una letra en vez de numero crashea el juego.</span>
+      </div>
+      <div class="issue warn">
+        <span class="issue-tag">WARN</span>
+        <span>La IA no verifica celdas ocupadas de turnos anteriores, solo evita colision con el movimiento actual.</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-label">Proximas tareas</div>
+    <p class="about-text" style="font-size:12px;line-height:2.2;">
+      · Corregir todos los indices en checkBoard() e implementar logica completa de victoria<br>
+      · Agregar try-catch para entradas invalidas del jugador<br>
+      · Implementar logica de decision real en la clase IA<br>
+      · Usar getMark() en lugar de caracteres hardcodeados<br>
+      · Agregar contador real de turnos al ScoreManager<br>
+      · Eliminar campo isPlaying redundante en TicTacToe
+    </p>
+  </div>
+
+  <div class="card green">
+    <div class="card-label">Historial</div>
+    <p class="about-text" style="font-size:12px;line-height:2;">
+      Consulta <code style="color:var(--accent3)">CHANGELOG.md</code> para ver el historial completo de cambios y versiones anteriores.
+    </p>
+  </div>
+</div>
+
+<script>
+  function show(id) {
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    event.target.classList.add('active');
+  }
+</script>
+</body>
+</html>
