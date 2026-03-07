@@ -1,255 +1,731 @@
 <!DOCTYPE html>
-<html lang="fr"><head>
-<meta http-equiv="content-type" content="text/html; charset=UTF-8">
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Carlos Manuel García Rodríguez - Curriculum Vitae 2025</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --bg: #0d0f14;
+      --surface: #151820;
+      --surface2: #1c2030;
+      --border: #2a3045;
+      --accent: #4f9cf9;
+      --accent2: #7ee8a2;
+      --text: #e8eaf0;
+      --text-muted: #8892a4;
+      --gold: #f0c060;
+    }
 
-<title>Carlos Manuel García Rodríguez - Curriculum Vitae 2025</title>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-<!--[if lt IE 9]>
-<script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
-<![endif]-->
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      font-size: 15px;
+    }
 
-<!-- Fichiers CSS -->
-<link rel="stylesheet" href="css/reset.css">
-<!--[if lt IE 9]>
-	<link rel="stylesheet" href="css/cv.css" media="screen">
-<![endif]-->
-<link rel="stylesheet" media="screen and (max-width:480px)" href="css/mobile.css">
-<link rel="stylesheet" media="screen and (min-width:481px)" href="css/cv.css">
-<link rel="stylesheet" media="print" href="css/print.css">
+    /* ── SIDEBAR ── */
+    .layout { display: grid; grid-template-columns: 300px 1fr; min-height: 100vh; }
+
+    aside {
+      background: var(--surface);
+      border-right: 1px solid var(--border);
+      padding: 40px 28px;
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 36px;
+    }
+
+    .avatar-wrap {
+      text-align: center;
+    }
+    .avatar-wrap img {
+      width: 110px;
+      height: 110px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid var(--accent);
+      box-shadow: 0 0 24px rgba(79,156,249,0.35);
+    }
+    .avatar-placeholder {
+      width: 110px;
+      height: 110px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 38px;
+      font-family: 'Playfair Display', serif;
+      color: #fff;
+      margin: 0 auto;
+      border: 3px solid var(--accent);
+      box-shadow: 0 0 24px rgba(79,156,249,0.35);
+    }
+    .name-block {
+      text-align: center;
+      margin-top: 14px;
+    }
+    .name-block h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 18px;
+      font-weight: 700;
+      line-height: 1.3;
+      color: var(--text);
+    }
+    .name-block .title {
+      font-size: 11.5px;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+      margin-top: 6px;
+      font-weight: 500;
+    }
+
+    /* sidebar sections */
+    .side-section h3 {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--text-muted);
+      margin-bottom: 14px;
+      padding-bottom: 6px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .contact-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .contact-list li { display: flex; align-items: flex-start; gap: 10px; font-size: 13px; color: var(--text-muted); }
+    .contact-list li svg { flex-shrink: 0; margin-top: 2px; }
+    .contact-list a { color: var(--accent); text-decoration: none; }
+    .contact-list a:hover { text-decoration: underline; }
+
+    /* skills pills */
+    .skills-grid { display: flex; flex-wrap: wrap; gap: 7px; }
+    .pill {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      color: var(--text);
+      font-size: 12px;
+      padding: 4px 10px;
+      border-radius: 20px;
+      transition: border-color .2s, color .2s;
+    }
+    .pill:hover { border-color: var(--accent); color: var(--accent); }
+    .pill.accent { border-color: var(--accent); color: var(--accent); }
+    .pill.green { border-color: var(--accent2); color: var(--accent2); }
+
+    /* certs list */
+    .cert-list { list-style: none; display: flex; flex-direction: column; gap: 9px; }
+    .cert-list li {
+      font-size: 12.5px;
+      color: var(--text-muted);
+      padding-left: 14px;
+      position: relative;
+      line-height: 1.4;
+    }
+    .cert-list li::before {
+      content: '▸';
+      position: absolute;
+      left: 0;
+      color: var(--gold);
+      font-size: 11px;
+      top: 1px;
+    }
+    .cert-list .cert-issuer {
+      display: block;
+      font-size: 11px;
+      color: var(--gold);
+      margin-top: 1px;
+    }
+
+    /* ── MAIN ── */
+    main { padding: 50px 52px; overflow-y: auto; }
+
+    /* hero */
+    .hero {
+      margin-bottom: 52px;
+      padding-bottom: 40px;
+      border-bottom: 1px solid var(--border);
+    }
+    .hero-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      color: var(--accent);
+      font-weight: 500;
+      margin-bottom: 10px;
+    }
+    .hero h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 36px;
+      line-height: 1.15;
+      margin-bottom: 20px;
+    }
+    .hero h2 span { color: var(--accent); }
+    .hero p {
+      font-size: 15px;
+      color: var(--text-muted);
+      max-width: 680px;
+      line-height: 1.75;
+    }
+    .hero-badges { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 22px; }
+    .badge {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 8px 16px;
+      font-size: 12.5px;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .badge span { color: var(--text); font-weight: 600; }
+
+    /* section */
+    section { margin-bottom: 52px; }
+    .section-title {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      color: var(--text-muted);
+      font-weight: 500;
+      margin-bottom: 28px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .section-title::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    /* timeline */
+    .timeline { display: flex; flex-direction: column; gap: 32px; }
+    .tl-item { display: grid; grid-template-columns: 160px 1fr; gap: 28px; position: relative; }
+    .tl-item::before {
+      content: '';
+      position: absolute;
+      left: 155px;
+      top: 8px;
+      bottom: -32px;
+      width: 1px;
+      background: var(--border);
+    }
+    .tl-item:last-child::before { display: none; }
+    .tl-meta { text-align: right; padding-top: 2px; }
+    .tl-meta .period {
+      font-size: 12px;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+    .tl-meta .company {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--accent2);
+      margin-top: 4px;
+    }
+    .tl-dot {
+      position: absolute;
+      left: 150px;
+      top: 6px;
+      width: 11px;
+      height: 11px;
+      border-radius: 50%;
+      background: var(--accent);
+      border: 2px solid var(--bg);
+      z-index: 1;
+    }
+    .tl-dot.current { background: var(--accent2); box-shadow: 0 0 10px rgba(126,232,162,0.5); }
+    .tl-content { padding-left: 24px; }
+    .tl-content h4 {
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: var(--text);
+    }
+    .tl-content .desc {
+      font-size: 13.5px;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+      line-height: 1.65;
+    }
+    .tl-content ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .tl-content ul li {
+      font-size: 13px;
+      color: var(--text-muted);
+      padding-left: 16px;
+      position: relative;
+      line-height: 1.5;
+    }
+    .tl-content ul li::before {
+      content: '›';
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+      font-size: 14px;
+    }
+    .skills-row { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
+    .tag {
+      font-size: 11px;
+      padding: 2px 9px;
+      border-radius: 4px;
+      background: rgba(79,156,249,0.1);
+      color: var(--accent);
+      border: 1px solid rgba(79,156,249,0.25);
+    }
+
+    /* education */
+    .edu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .edu-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 20px 22px;
+      transition: border-color .2s;
+    }
+    .edu-card:hover { border-color: var(--accent); }
+    .edu-card .deg { font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: 4px; line-height: 1.4; }
+    .edu-card .inst { font-size: 13px; color: var(--accent2); margin-bottom: 6px; }
+    .edu-card .period-edu { font-size: 12px; color: var(--text-muted); }
+    .edu-card .desc-edu { font-size: 12.5px; color: var(--text-muted); margin-top: 8px; line-height: 1.55; }
+
+    /* hobbies */
+    .hobbies-row { display: flex; gap: 20px; flex-wrap: wrap; }
+    .hobby-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px 22px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 14px;
+      color: var(--text-muted);
+    }
+    .hobby-card .icon { font-size: 22px; }
+
+    /* responsive */
+    @media (max-width: 900px) {
+      .layout { grid-template-columns: 1fr; }
+      aside { position: static; height: auto; }
+      main { padding: 32px 24px; }
+      .tl-item { grid-template-columns: 1fr; }
+      .tl-item::before { display: none; }
+      .tl-dot { display: none; }
+      .tl-meta { text-align: left; }
+      .tl-content { padding-left: 0; }
+      .edu-grid { grid-template-columns: 1fr; }
+    }
+  </style>
 </head>
-
 <body>
+<div class="layout">
 
-	<!-- Header -->
-	<header role="banner">
-		<div class="container_16">
-				<hgroup>
-					<h1>Carlos Manuel García Rodríguez</h1>
-					<h2>Ethical Hacker, Developer & Middleware Support - Expert </h2>
-				</hgroup>
+  <!-- ── SIDEBAR ── -->
+  <aside>
+    <div class="avatar-wrap">
+      <div class="avatar-placeholder">CG</div>
+      <div class="name-block">
+        <h1>Carlos Manuel<br>García Rodríguez</h1>
+        <div class="title">InfoSec · DevOps · Java · UNIX</div>
+      </div>
+    </div>
 
-				<figure>
-					<img src="css/avatar3.png" alt="CEH - Certified Ethical Hacker">
-					<img src="me.png" alt="Charlie">
-				</figure>
-		</div>
-	</header>
+    <!-- Contact -->
+    <div class="side-section">
+      <h3>Contact</h3>
+      <ul class="contact-list">
+        <li>
+          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          Garcia, Nuevo León, México
+        </li>
+        <li>
+          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.09 9.81 19.79 19.79 0 01.06 1.18 2 2 0 012 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.06 7.84a16 16 0 006.1 6.1l1.21-1.21a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 15z"/></svg>
+          <a href="https://wa.me/5218120388058">+52 81 2038 8058</a>
+        </li>
+        <li>
+          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 01-2.06 0L2 7"/></svg>
+          <a href="mailto:cgarciardzc@gmail.com">cgarciardzc@gmail.com</a>
+        </li>
+        <li>
+          <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          <a href="https://www.linkedin.com/in/carlos-manuel-garciarodriguez-734719358" target="_blank">LinkedIn Profile</a>
+        </li>
+        <li>
+          <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+          <a href="https://github.com/canrosss" target="_blank">github.com/canrosss</a>
+        </li>
+      </ul>
+    </div>
 
-	<!-- Contact -->
-	<section class="contactform clearfix">
-		<div class="container_16">
-			<h3>Contactez-moi</h3>
-			<p>Remplissez le formulaire ci-dessous afin de m'envoyer un message. Je vous répondrais dans les plus bref délai.
-			<br><em>Tous les champs sont requis.</em></p>
-			<form novalidate="novalidate" method="post" action="#" name="contact" class="grid_16">
-				<p class="grid_10"><textarea name="message" placeholder="Votre message" class="required"></textarea></p>
-				<p class="grid_6">
-					<input name="nom" placeholder="Nom - Prénom" class="required" type="text">
-					<input name="email" placeholder="Adresse email" class="required" type="email">
-					<input name="envoi" value="Envoyer le message" class="required" type="submit">
-					<span class="messageform"></span>
-				</p>
-			</form>
-		</div>
-	</section>
+    <!-- Skills -->
+    <div class="side-section">
+      <h3>Core Skills</h3>
+      <div class="skills-grid">
+        <span class="pill accent">Java / J2EE</span>
+        <span class="pill accent">Middleware</span>
+        <span class="pill accent">DevOps</span>
+        <span class="pill green">Python</span>
+        <span class="pill green">Bash / Shell</span>
+        <span class="pill">IBM WebSphere</span>
+        <span class="pill">Weblogic</span>
+        <span class="pill">Big Data / Hadoop</span>
+        <span class="pill">Prometheus</span>
+        <span class="pill">Grafana</span>
+        <span class="pill">ELK Stack</span>
+        <span class="pill">AppDynamics</span>
+        <span class="pill">Datadog</span>
+        <span class="pill">Autosys</span>
+        <span class="pill">KaliLinux</span>
+        <span class="pill">OWASP</span>
+        <span class="pill">Metasploit</span>
+        <span class="pill">NMAP</span>
+        <span class="pill">AIX / Solaris</span>
+        <span class="pill">GNU/Linux</span>
+        <span class="pill">Ansible</span>
+        <span class="pill">SQL</span>
+        <span class="pill">HTML5 / CSS3</span>
+        <span class="pill">Bootstrap</span>
+      </div>
+    </div>
 
-	<!-- Corps -->
-	<section role="main" class="container_16 clearfix">
-		<div class="grid_16">
-			<!-- A propos -->
-			<div class="grid_8 apropos">
-				<h3>My Work Goal</h3>
-				<p>To work as a team and provide with my experience additional value to the company, carrying out my position with commitment and professionalism.</p>
-				<p>Focus my knowledge on information security to perform my work as a valuable resource that can participate in multidisciplinary and international teams counting on a deep understanding of web systems, pentesting techniques and vulnerability assessment, ability to develop software, automating tasks and improving the flow of own work and of the entity.</p>
-			</div>
+    <!-- Certifications -->
+    <div class="side-section">
+      <h3>Certifications</h3>
+      <ul class="cert-list">
+        <li>
+          Certified Ethical Hacker (CEH)
+          <span class="cert-issuer">EC-Council · 2013</span>
+        </li>
+        <li>
+          SQL: A Practical Introduction for Querying Databases
+          <span class="cert-issuer">Coursera / IBM</span>
+        </li>
+        <li>
+          Fundamentals of Ansible
+          <span class="cert-issuer">Coursera / IBM</span>
+        </li>
+        <li>
+          Introduction to Software Engineering
+          <span class="cert-issuer">Coursera / IBM</span>
+        </li>
+        <li>
+          Java Programming for Beginners
+          <span class="cert-issuer">Coursera</span>
+        </li>
+        <li>
+          Administrando Información de Contacto
+          <span class="cert-issuer">Coursera</span>
+        </li>
+      </ul>
+    </div>
+  </aside>
 
-      <div class="grid_8 apropos">
-				<h3>My Portfolio</h3>
-				 
-			</div>
+  <!-- ── MAIN ── -->
+  <main>
 
-			<!-- Compétences -->
-			<div class="grid_8 competences">
-				<h3>My Skills</h3>
-				<ul class="barres">
-					<li data-skills="80">GNU/Linux Sysadmin <span style="width: 90%;"></span></li>
-					<li data-skills="80">Microsoft Windows 10<span style="width: 90%;"></span></li>
-				</ul>
+    <!-- Hero / Summary -->
+    <div class="hero">
+      <div class="hero-label">Curriculum Vitae · 2025</div>
+      <h2>Information Security<br><span>& DevOps Engineer</span></h2>
+      <p>
+        With over a decade of experience in critical banking infrastructure, I specialize in
+        delivering secure, resilient, and high-performing systems. My career has been shaped
+        around supporting and improving Java-based applications in high-stakes environments,
+        particularly in fraud prevention and Anti-Money Laundering (AML) systems.
+      </p>
+      <p style="margin-top:12px;">
+        Proficient in vulnerability management, automation (Bash/UNIX), Java memory tuning
+        (JVM, heap analysis), and middleware optimization. Known for bridging the gap between
+        development and operations, supporting international teams, and communicating technical
+        insights clearly to non-technical stakeholders.
+      </p>
+      <div class="hero-badges">
+        <div class="badge">⏱ <span>13+</span> years experience</div>
+        <div class="badge">🏦 Banking &amp; <span>FinTech</span></div>
+        <div class="badge">🛡️ <span>CEH</span> Certified</div>
+        <div class="badge">⚙️ <span>AML / Fraud</span> Systems</div>
+      </div>
+    </div>
 
-        <ul class="barres">
-			    <li data-skills="95">Shell scripting with Jython<span style="width: 45%;"></span></li>
-			    <li data-skills="65">AIX<span style="width: 65%;"></span></li>
-			    <li data-skills="75">Solaris<span style="width: 75%;"></span></li>
-			    <li data-skills="80">GNU/Linux<span style="width: 80%;"></span></li>
-			    <li data-skills="95">Shell scripting<span style="width: 80%;"></span></li>
-			    <li data-skills="95">Backend experience with Ruby/Rails<span style="width: 50%;"></span></li>
-          		<li data-skills="95">HTML5<span style="width: 95%;"></span></li>
-    			<li data-skills="85">CSS 3<span style="width: 95%;"></span></li>
-	   			<li data-skills="5">SASS<span style="width: 95%;"></span></li>
-	   			<li data-skills="35">Bootstrap<span style="width: 95%;"></span></li>
-	   			<li data-skills="35">Security Framework - Metasploit<span style="width: 70%;"></span></li>
-	   			<li data-skills="35">KaliLinux - Pentesting Distro<span style="width: 90%;"></span></li>
-	   			<li data-skills="35">NMAP Network Security Scan over Linux/Unix<span style="width: 90%;"></span></li>
-	   			<li data-skills="35">OWASP<span style="width: 50%;"></span></li>
-	   			<li data-skills="80">Java<span style="width: 80%;"></span></li>
-				<li data-skills="35">Big Data Hadoop <span style="width: 50%;"></span></li>
-	   			<li data-skills="80">Python<span style="width: 80%;"></span></li>
-				<li data-skills="35">Appdynamics<span style="width: 50%;"></span></li>
-	   			<li data-skills="80">Datadog<span style="width: 80%;"></span></li>
-				<li data-skills="35">Autosys<span style="width: 50%;"></span></li>
-	   			<li data-skills="80">IBM Application Server (Websphere)<span style="width: 80%;"></span></li>
-        </ul>
+    <!-- Work Experience -->
+    <section>
+      <div class="section-title">Work Experience</div>
+      <div class="timeline">
 
-			</div>
-		</div>
+        <!-- Citi Tech Lead -->
+        <div class="tl-item">
+          <div class="tl-meta">
+            <div class="period">July 2025 — Present</div>
+            <div class="company">Citi</div>
+          </div>
+          <div class="tl-dot current"></div>
+          <div class="tl-content">
+            <h4>Aplication Sr. Support — Tech Lead</h4>
+            <p class="desc">
+              Responsible for ensuring reliability, performance, and uptime of production systems
+              through advanced observability and canary deployments. Provide production support,
+              quickly diagnose and resolve incidents, and automate monitoring and alerting to prevent
+              issues before they impact users.
+            </p>
+            <ul>
+              <li>Implement and maintain observability tools (metrics, logs, tracing).</li>
+              <li>Manage canary releases to detect issues early during deployments.</li>
+              <li>Provide 2nd/3rd level production support and incident resolution.</li>
+              <li>Automate alerts and remediation processes to reduce downtime.</li>
+              <li>Collaborate with dev teams to improve system reliability.</li>
+            </ul>
+            <div class="skills-row">
+              <span class="tag">Prometheus</span>
+              <span class="tag">Grafana</span>
+              <span class="tag">ELK</span>
+              <span class="tag">Canary Deployments</span>
+              <span class="tag">Linux</span>
+              <span class="tag">Python</span>
+              <span class="tag">Bash</span>
+            </div>
+          </div>
+        </div>
 
-			<!-- Expériences -->
-			<div class="grid_16 experiences">
-				<h3>Working Experience</h3>
+        <!-- Citi DevOps -->
+        <div class="tl-item">
+          <div class="tl-meta">
+            <div class="period">Nov 2021 — Jul 2025</div>
+            <div class="company">Citi</div>
+          </div>
+          <div class="tl-dot"></div>
+          <div class="tl-content">
+            <h4>Application Sr. Support — DevOps Engineer</h4>
+            <p class="desc">
+              Analyzed and implemented infrastructure solutions for mission-critical Citibanamex
+              applications, focusing on enhancing the architecture and performance of AML systems.
+              Ensured high availability, security, and compliance of key banking platforms while
+              collaborating with global and regional teams.
+            </p>
+            <ul>
+              <li>Led infrastructure improvements to support AML and fraud detection platforms.</li>
+              <li>Served as primary liaison between global development teams and regional operations.</li>
+              <li>Managed application lifecycle: deployment, patching, version upgrades, and security remediation.</li>
+              <li>Represented the regional team in business meetings, translating technical updates into actionable insights.</li>
+              <li>Drove continuous improvement initiatives to optimize system performance.</li>
+            </ul>
+            <div class="skills-row">
+              <span class="tag">Big Data</span>
+              <span class="tag">Java</span>
+              <span class="tag">AML</span>
+              <span class="tag">DDAR System</span>
+              <span class="tag">DevOps</span>
+            </div>
+          </div>
+        </div>
 
-				<ul>
-					<li>
-						<h4><strong>Application Sr Support </strong> Citi</h4>
-						<span class="lieu">CDMX, Actipan</span>
-						<span class="dates">January 2024 - Current</span>
-						<p>Analyze and implement new infrastructure solutions for critical Citibanamex applications, with a focus on improving the architecture of AML (Anti-Money Laundering) systems. Address operational issues and ensure high availability and performance of key banking services. </p>
-						
-					
-						<p><b>Key Responsibilities:</b></p>
-						
-						<li>Collaborate with multidisciplinary teams (GPA, Support Teams, EAP Teams) to maintain and support the bank’s critical infrastructure, ensuring systems remain secure, stable, and up to date.<li>
+        <!-- Intermediate Analyst -->
+        <div class="tl-item">
+          <div class="tl-meta">
+            <div class="period">Apr 2018 — Nov 2021</div>
+            <div class="company">Citi</div>
+          </div>
+          <div class="tl-dot"></div>
+          <div class="tl-content">
+            <h4>Intermediate Analyst — Fraud &amp; AML Applications</h4>
+            <p class="desc">
+              Led planning, analysis, and execution of critical technology projects supporting
+              Citibanamex's Fraud and Anti-Money Laundering (GFTS) systems. Ensured high availability,
+              resilience, and security of key applications.
+            </p>
+            <ul>
+              <li>Maintained 24/7 availability and integrity of core fraud and AML applications.</li>
+              <li>Diagnosed and resolved complex Java Application Server issues including memory leaks and JVM tuning.</li>
+              <li>Coordinated patch management, version upgrades, and secure deployments.</li>
+              <li>Developed and executed remediation plans to address security vulnerabilities.</li>
+              <li>Implemented automation and performance tuning strategies for continuous improvement.</li>
+            </ul>
+            <div class="skills-row">
+              <span class="tag">JVM Tuning</span>
+              <span class="tag">Java App Server</span>
+              <span class="tag">Patch Management</span>
+              <span class="tag">Automation</span>
+            </div>
+          </div>
+        </div>
 
-						<li>Diagnose and resolve errors in Java-based application servers, safeguarding database integrity across the Big Data infrastructure to ensure compliance with data retention policies. </li>
-							
-						<li>Design and execute remediation plans, including the deployment of updated versions of fraud detection and prevention applications.</li>
-						<li>Lead the coordination and execution of technical activities, including the creation of detailed action plans to support business objectives.</li>
-						<li>Oversee the integration of new applications into the DDAR System (AML Monitoring Big Data Analytics Repository – Mexico), ensuring seamless alignment with Big Data technologies.</li>
-						<li>Ensure that systems interfacing with DDAR — such as Cards, Markets, AIP, and AMR business units — are consistently updated in accordance with regulatory data retention requirements.</li>
+        <!-- Wipro Middleware -->
+        <div class="tl-item">
+          <div class="tl-meta">
+            <div class="period">Apr 2016 — Dec 2017</div>
+            <div class="company">Wipro</div>
+          </div>
+          <div class="tl-dot"></div>
+          <div class="tl-content">
+            <h4>Middleware Support Engineer — Banking Infrastructure</h4>
+            <p class="desc">
+              Supported the stability, performance, and security of mission-critical banking
+              infrastructure at Citibanamex. Specialized in IBM WebSphere administration,
+              Java application tuning, and automation of operational tasks. Monterrey, N.L.
+            </p>
+            <ul>
+              <li>Managed deployment, configuration, and version migration of IBM WebSphere Application Server.</li>
+              <li>Diagnosed Java issues including memory leaks, heap dumps, and performance bottlenecks.</li>
+              <li>Automated routine tasks using Bash scripting, reducing manual errors and increasing efficiency.</li>
+              <li>Provided application-level support for KYC, Mantas (AML), and SaNS banking systems.</li>
+              <li>Renewed SSL certificates and applied security patches to maintain compliance.</li>
+            </ul>
+            <div class="skills-row">
+              <span class="tag">IBM WebSphere</span>
+              <span class="tag">KYC / Mantas</span>
+              <span class="tag">Bash Scripting</span>
+              <span class="tag">SSL Certs</span>
+            </div>
+          </div>
+        </div>
 
-					<li>
-						<h4><strong>Tech Integrator </strong> Citibanamex</h4>
-						<span class="lieu">CDMX, Actipan</span>
-						<span class="dates">January 2022 - 2023</span>
-						<p>Analyze and implement new infrastructure for critical applications improving architecture of Citibanamex for AML applications. 
-						Provide solution to problems of the daily operation. </p>
-						
-						<p>Working with Multidisciplinary teams (GPA, Support Teams, EAP Teams to provide support in the critical services infrastructure of the bank, keeping the infrastructure safe and up to date. 
-						Implementing solution to errors of applications in Java Application Server, maintaining the integrity of the database over 
-						<b>BIG DATA INFRASTRUCTURE</b> to ensure Bank compliance with data retention policies. </p>
-						
-						<p><b>Responsibilities:</b>  
-						<li>Provide remediation plans and implementation of new versions of the fraud combat unit application. <li>
+        <!-- Wipro J2EE -->
+        <div class="tl-item">
+          <div class="tl-meta">
+            <div class="period">Feb 2012 — Apr 2016</div>
+            <div class="company">Wipro</div>
+          </div>
+          <div class="tl-dot"></div>
+          <div class="tl-content">
+            <h4>Middleware Support Engineer — Java J2EE &amp; UNIX Automation</h4>
+            <p class="desc">
+              Provided middleware support for Java J2EE applications, ensuring stability,
+              performance, and security across critical banking systems. Developed automation
+              scripts, managed system operations, and led vulnerability remediation strategies.
+              Monterrey, N.L.
+            </p>
+            <ul>
+              <li>Resolved execution, compilation, and deployment issues in complex J2EE environments.</li>
+              <li>Designed and executed vulnerability remediation plans; performed risk assessments.</li>
+              <li>Created efficient Bash scripts to automate operational tasks on UNIX/Linux systems.</li>
+              <li>Conducted JVM tuning and heap memory analysis to identify and fix memory leaks.</li>
+              <li>Handled patch management, log analysis, and configuration of high-availability systems.</li>
+            </ul>
+            <div class="skills-row">
+              <span class="tag">Java J2EE</span>
+              <span class="tag">UNIX</span>
+              <span class="tag">Security</span>
+              <span class="tag">JVM Tuning</span>
+              <span class="tag">Bash</span>
+            </div>
+          </div>
+        </div>
 
-						<li>Coordination of activities, creation of the action plan and direction of technical teams to achieve the results required by the bussiness to achieve the integration of new applications to
-						the DDAR SYSTEM <b>(AML MONITORING BIG DATA ANALYTICS REPOSITORY MEXICO)</b> participating in the integration stages under BIG DATA technology, this is system is responsible for keeping client systems suck as 
-						<b>cards, markets, AIP, AMR bussiness systems</b> keep up to date in terms of data retention. </li>
-							
-						<li>Keeping critical applications updated, secure and working without interruptions to production avoiding losses to the business. 
-						By applying new deploys,  patches, improvements to the application.</p></li>
-					</li>
-				</ul>
+        <!-- Tec -->
+        <div class="tl-item">
+          <div class="tl-meta">
+            <div class="period">Oct 2008 — Dec 2011</div>
+            <div class="company">Tec de Monterrey</div>
+          </div>
+          <div class="tl-dot"></div>
+          <div class="tl-content">
+            <h4>Web Programmer — Online Education R&amp;D</h4>
+            <p class="desc">
+              Developed web solutions for the Online Education Research and Development Center
+              at ITESM (Tecnológico de Monterrey), programming interactive content for the
+              Learning Management System (LMS).
+            </p>
+            <ul>
+              <li>Programmed interactive content and custom components for the LMS using JavaScript, AJAX, jQuery, HTML, and CSS.</li>
+              <li>Enhanced interactivity and debugging capabilities within online courses.</li>
+              <li>Collaborated with instructional designers and multimedia teams on responsive educational interfaces.</li>
+            </ul>
+            <div class="skills-row">
+              <span class="tag">JavaScript</span>
+              <span class="tag">jQuery</span>
+              <span class="tag">AJAX</span>
+              <span class="tag">HTML/CSS</span>
+              <span class="tag">SUMTOTAL LMS</span>
+            </div>
+          </div>
+        </div>
 
+      </div>
+    </section>
 
-				<ul>
-					<li>
-						<h4><strong>Tech Analyst Level 3</strong> Citibanamex</h4>
-						<span class="lieu">CDMX, Actipan</span>
-						<span class="dates">Abril 2018 - Current</span>
-						<p>Organize, analyze and implement new projects as well as ensure the availability and operation of the critical applications architecture of Citibanamex for the applications of the combat unit to fraud and money laundering (GFTS). Provide solution to problems of the daily operation. Working with Multidisciplinary teams to provide support in the critical services infrastructure of the bank, keeping the infrastructure safe and up to date. Implementing solution to errors of applications in Java Application Server, maintaining the integrity of the database to ensure that information is not compromised. Provide remediation plans and implementation of new versions of the fraud combat unit application. Coordination of activities, creation of the action plan and direction of technical teams to achieve the results required by the business.
-						<p><b>Responsibilities:</b>  Keeping critical applications updated, secure and working without interruptions to production avoiding losses to the business. By applying new deploys,  patches, improvements to the application.</p>
-					</li>
-				</ul>
+    <!-- Education -->
+    <section>
+      <div class="section-title">Education</div>
+      <div class="edu-grid">
+        <div class="edu-card">
+          <div class="deg">Engineer in Computational Administrative Systems (ISCA)</div>
+          <div class="inst">UTM — Universidad TecMilenio</div>
+          <div class="period-edu">August 2003 – December 2008 · San Nicolás, N.L.</div>
+          <p class="desc-edu">
+            Specialized in development and administration of strategic information systems, with a
+            business focus to navigate rapid technological change and international markets.
+          </p>
+        </div>
+        <div class="edu-card">
+          <div class="deg">Certified Ethical Hacker (CEH)</div>
+          <div class="inst">EC-Council</div>
+          <div class="period-edu">February – March 2013 · San Pedro Garza García, N.L.</div>
+          <p class="desc-edu">
+            Professional certification covering ethical hacking methodologies, vulnerability
+            assessment, penetration testing, and information security auditing.
+          </p>
+        </div>
+        <div class="edu-card">
+          <div class="deg">Ingeniero en Sistemas Computacionales Administrativos</div>
+          <div class="inst">Tecnológico de Monterrey</div>
+          <div class="period-edu">August 2003 – December 2009</div>
+          <p class="desc-edu">
+            Information Technology degree with focus on systems design, software engineering,
+            and business process automation.
+          </p>
+        </div>
+        <div class="edu-card">
+          <div class="deg">Robotics &amp; Mechatronics</div>
+          <div class="inst">Universidad Regiomontana</div>
+          <div class="period-edu">2009 · Monterrey, N.L.</div>
+          <p class="desc-edu">
+            Knowledge in mechatronic systems integration for industrial production and
+            automated production system programming.
+          </p>
+        </div>
+      </div>
+    </section>
 
-				<ul>
-					<li>
-						<h4><strong>Middleware Specialist Level 3</strong> Citibanamex</h4>
-						<span class="lieu">Monterrey, Nuevo León, México</span>
-						<span class="dates">April 2016 - December 2017</span>
-						<p>Provide solution to problems in the Middleware layer, provide support in the critical services infrastructure of the bank, keep the infrastructure safe and up to date. Analysis of errors of applications in Java and analysis of memory leakage, tunning to web services. Installation of packages and patches in IBM Websphere, migration of version of the server of applications, Support for webservers, renewal of certificates, configuration, programming of shell scripts to automate tasks in the servers. Experience providing support at middleware level for the Bank Application like KYC, Mantas, SaNS. </p>
-						<p><b>Responsibilities:</b>  Keeping the Web layer updated and secure by applying security patches to the application server, enabling the deployment and proper functioning of the critical services infrastructure of the bank, deployment of new infrastructure, version migration and support to the problems of the application.</p>
-					</li>
-				</ul>
-				<ul>
-					<li>
-						<h4><strong>UNIX Programmer & JAVA J2EE Support</strong> Citibanamex</h4>
-						<span class="lieu">Monterrey, Nuevo León, México</span>
-						<span class="dates">February 2012 - April 2016</span>
-						<p>Provide solution to problems in the Middleware layer by supporting Java J2EE problems (execution, compilation, deploy errors). Creation of scripts to automate tasks using bash in UNIX environments, administration and vulnerability remediation plans, vulnerability reporting and interpretation with management.</p>
-						<p><b>Responsibilities:</b>Keep the Web layer updated and secure by applying security patches that affected Java. </p.>
-					</li>
-				</ul>
-				<ul>
-					<li>
-						<h4><strong>Web programmer</strong> Instituto Tecnológico de Estudios Superiores de Monterrey</h4>
-						<span class="lieu">Monterrey, Nuevo León, México</span>
-						<span class="dates">Octubre 2008 - Agosto 2011</span>
-						<p>Program web solutions for the online education research and development center for ITESM</p>
-						<p><b>Responsibilities:</b>Maintain the courses in SUMTOTAL, create new courses, debug problems in the web courses.</p>
-					</li>
-				</ul>
-			</div>
+    <!-- Work Goal -->
+    <section>
+      <div class="section-title">Work Goal</div>
+      <p style="color: var(--text-muted); max-width: 700px; line-height: 1.75; font-size: 14.5px;">
+        To work as part of a team and provide additional value through experience, carrying out my
+        position with commitment and professionalism. To focus knowledge on information security
+        while participating in multidisciplinary and international teams, leveraging a deep
+        understanding of web systems, pentesting techniques, vulnerability assessment, software
+        development, and task automation to improve both individual and organizational workflows.
+      </p>
+    </section>
 
-			<!-- Formations -->
-			<div class="grid_16 formations">
-				<h3>Education</h3>
-				<ul>
-					<li>
-            <h4><strong>Engineer in Computational Administrative Systems (ISCA) </strong>UTM (Universidad TecMilenio) </h4>
-						<span class="lieu">San Nicolás, Nuevo León, México</span>
-						<span class="dates">August 2003 - December 2008</span>
-						<p>
-              The Engineer in Systems of Administrative Computation is a professional specialized in the development and the administration of the systems of strategic information of a company. It has a business focus that allows it to face the rapid technological changes and the opening of the international market.
-</p>
-					</li>
-				</ul>
-				<ul>
-					<li>
-						<h4><strong>Certified Ethical Hacker (CEH) </strong>EC-Council</h4>
-						<span class="lieu">San Pedro Garza Garcia, Nuevo León, México</span>
-						<span class="dates">February 2013 - March 2013</span>
-						<p>A CEH is a certified professional Ethical Hacker capable of understanding and detecting the weaknesses and vulnerabilities of a company's information systems using the same techniques and tools used by cybercriminals, conducting legitimate and ethical investigations to evaluate security postures in the company through audits and penetration tests.</p>
-					</li>
-				</ul>
-				<ul>
-					<li>
-						<h4><strong>Robotics </strong>Universidad Regiomontana</h4>
-						<span class="lieu">Monterrey, Nuevo León, México</span>
-						<span class="dates">Agosto 2009</span>
-						<p>Acquire the necessary knowledge to carry out the integration of mechatronic systems in industrial production and develop the skills to develop automated production systems, as well as programming and then running.</p>
-					</li>
-				</ul>
-			</div>
+    <!-- Hobbies -->
+    <section>
+      <div class="section-title">Interests</div>
+      <div class="hobbies-row">
+        <div class="hobby-card"><span class="icon">⚽</span> Soccer</div>
+        <div class="hobby-card"><span class="icon">₿</span> Cryptocurrency &amp; DeFi Markets</div>
+        <div class="hobby-card"><span class="icon">🔐</span> InfoSec Research</div>
+        <div class="hobby-card"><span class="icon">🤖</span> Automation &amp; Scripting</div>
+      </div>
+    </section>
 
-			<!-- Loisirs -->
-			<div class="grid_8 loisirs">
-				<h3>Hobbies</h3>
-				<p><strong>Sports:</strong> Play soccer </p>
-				<p><strong>Economy:</strong>Read about criptocurrency news and market to stay update.</p>
-
-			</div>
-
-			<!-- Contact -->
-			<div class="grid_8 contact">
-				<h3>Contact</h3>
-				<ul>
-					<li class="lieu">Garcia, Nuevo León</li>
-					<li class="phone">+5218120388058 (Whatsapp only)</li>
-					<li class="mail"><a href="mailto:mon.adresse@email.fr">garciardzc@gmail.com</a></li>
-					<li class="site"><a href="http://www.mon-site.fr/">Github https://github.com/canrosss</a></li>
-				</ul>
-			</div>
-	</section>
-	</section>
-
-<!-- Scripts JavaScript -->
-<script src="css/jquery-1.js"></script>
-<script src="css/validate.js"></script>
-<!--[if lt IE 9]>
-<script src="scripts/placeholder.js"></script>
-<![endif]-->
-<script src="css/plugins.js"></script>
-
-</body></html>
+  </main>
+</div>
+</body>
+</html>
