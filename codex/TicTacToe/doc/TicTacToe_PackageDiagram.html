@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TicTacToe — Diagrama de Paquetes</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;700;900&display=swap');
+
+  :root {
+    --bg: #0a0e1a;
+    --panel: #0f1628;
+    --border: #1e3a5f;
+    --accent: #00d4ff;
+    --accent2: #ff6b35;
+    --accent3: #7fff6b;
+    --purple: #b06bff;
+    --text: #c8e0f0;
+    --dim: #4a6a8a;
+    --glow: 0 0 20px rgba(0, 212, 255, 0.3);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Share Tech Mono', monospace;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(0,212,255,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,212,255,0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  header {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    padding: 40px 20px 24px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .title-tag {
+    font-size: 11px;
+    color: var(--accent);
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  h1 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: clamp(24px, 4vw, 42px);
+    font-weight: 900;
+    color: #fff;
+    text-shadow: 0 0 30px rgba(0,212,255,0.5);
+    letter-spacing: 4px;
+  }
+
+  h1 span { color: var(--accent); }
+
+  .subtitle {
+    margin-top: 8px;
+    font-size: 12px;
+    color: var(--dim);
+    letter-spacing: 2px;
+  }
+
+  /* Stats */
+  .stats {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    flex-wrap: wrap;
+    padding: 24px 20px;
+  }
+
+  .stat {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    padding: 12px 20px;
+    min-width: 100px;
+    text-align: center;
+    transition: border-color 0.3s, box-shadow 0.3s;
+  }
+
+  .stat:hover {
+    border-color: var(--accent);
+    box-shadow: var(--glow);
+  }
+
+  .stat-num {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 26px;
+    color: var(--accent);
+  }
+
+  .stat-lbl {
+    font-size: 9px;
+    color: var(--dim);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-top: 2px;
+  }
+
+  /* Main diagram area */
+  .diagram-wrapper {
+    position: relative;
+    z-index: 1;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 10px 30px 60px;
+  }
+
+  .section-title {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 16px;
+    color: var(--accent3);
+    margin-bottom: 6px;
+    letter-spacing: 3px;
+  }
+
+  .section-desc {
+    font-size: 11px;
+    color: var(--dim);
+    margin-bottom: 24px;
+    letter-spacing: 1px;
+    line-height: 1.8;
+  }
+
+  /* SVG diagram */
+  .diagram-card {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    padding: 24px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .diagram-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 3px; height: 100%;
+    background: var(--accent3);
+  }
+
+  .card-label {
+    font-size: 10px;
+    letter-spacing: 3px;
+    color: var(--dim);
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+
+  .svg-container {
+    display: flex;
+    justify-content: center;
+    overflow-x: auto;
+    padding: 10px 0;
+  }
+
+  .svg-container svg {
+    max-width: 100%;
+    height: auto;
+  }
+
+  /* Tooltip */
+  .tooltip {
+    position: fixed;
+    background: #0c1222;
+    border: 1px solid var(--accent);
+    padding: 12px 16px;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 11px;
+    color: var(--text);
+    line-height: 1.7;
+    max-width: 280px;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.15s;
+    z-index: 100;
+    box-shadow: 0 0 20px rgba(0,212,255,0.2);
+  }
+
+  .tooltip.visible { opacity: 1; }
+
+  .tooltip .tt-title {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 11px;
+    letter-spacing: 1px;
+    margin-bottom: 6px;
+  }
+
+  .tooltip .tt-files {
+    color: var(--dim);
+    font-size: 10px;
+  }
+
+  /* Legend */
+  .legend {
+    position: relative;
+    z-index: 1;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 30px 40px;
+  }
+
+  .legend-grid {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    padding: 8px 14px;
+    font-size: 10px;
+    color: var(--dim);
+    letter-spacing: 1px;
+  }
+
+  .legend-swatch {
+    width: 14px;
+    height: 14px;
+    border-radius: 2px;
+    border: 1.5px solid;
+  }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar { width: 6px; height: 6px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--border); }
+  ::-webkit-scrollbar-thumb:hover { background: var(--accent); }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="title-tag">// com.canrossoft.tictactoe — v0.1</div>
+  <h1>TIC<span>TAC</span>TOE</h1>
+  <div class="subtitle">DIAGRAMA DE PAQUETES · ORGANIZACIÓN MODULAR</div>
+</header>
+
+<div class="stats">
+  <div class="stat"><div class="stat-num">5</div><div class="stat-lbl">Paquetes</div></div>
+  <div class="stat"><div class="stat-num">8</div><div class="stat-lbl">Clases</div></div>
+  <div class="stat"><div class="stat-num">8</div><div class="stat-lbl">Dependencias</div></div>
+  <div class="stat"><div class="stat-num">1</div><div class="stat-lbl">Lib. externa</div></div>
+</div>
+
+<div class="diagram-wrapper">
+  <div class="section-title">// PACKAGE DIAGRAM</div>
+  <div class="section-desc">Organización de paquetes y dependencias entre módulos del proyecto. Hover sobre cada elemento para ver detalles.</div>
+
+  <div class="diagram-card">
+    <div class="card-label">PACKAGE STRUCTURE — com.canrossoft.tictactoe</div>
+    <div class="svg-container" id="diagram"></div>
+  </div>
+</div>
+
+<div class="legend">
+  <div class="legend-grid">
+    <div class="legend-item"><div class="legend-swatch" style="background:rgba(0,212,255,0.08);border-color:#00d4ff;"></div>ROOT PACKAGE</div>
+    <div class="legend-item"><div class="legend-swatch" style="background:rgba(127,255,107,0.08);border-color:#7fff6b;"></div>MODEL</div>
+    <div class="legend-item"><div class="legend-swatch" style="background:rgba(176,107,255,0.08);border-color:#b06bff;"></div>AI</div>
+    <div class="legend-item"><div class="legend-swatch" style="background:rgba(255,155,53,0.08);border-color:#ff9b35;"></div>SCORE</div>
+    <div class="legend-item"><div class="legend-swatch" style="background:rgba(0,212,255,0.08);border-color:#00a8cc;"></div>UI</div>
+    <div class="legend-item"><div class="legend-swatch" style="background:rgba(100,100,100,0.08);border-color:#555;"></div>EXTERNAL</div>
+    <div class="legend-item"><div class="legend-swatch" style="background:#0f1628;border-color:#1e3a5f;"></div>CLASE</div>
+    <div class="legend-item" style="color:var(--accent);">──▸ DEPENDENCIA</div>
+  </div>
+</div>
+
+<div class="tooltip" id="tooltip">
+  <div class="tt-title" id="tt-title"></div>
+  <div class="tt-desc" id="tt-desc"></div>
+  <div class="tt-files" id="tt-files"></div>
+</div>
+
+<script>
+(function() {
+
+  /* ─── LAYOUT CONFIG ─── */
+  const W = 960, H = 720;
+  const PKG_R = 8; // package corner radius
+
+  /* ─── DATA ─── */
+  const packages = [
+    {
+      id: 'root', label: 'com.canrossoft.tictactoe', color: '#00d4ff',
+      x: 40, y: 40, w: 600, h: 540,
+      desc: 'Paquete raíz que contiene el entry point y todos los sub-paquetes del juego.',
+      files: 'TicTacToe.java'
+    },
+    {
+      id: 'model', label: 'model', color: '#7fff6b',
+      x: 60, y: 200, w: 250, h: 160,
+      desc: 'Entidades del dominio: representación del tablero y del jugador humano.',
+      files: 'Board.java, Player.java'
+    },
+    {
+      id: 'ai', label: 'ai', color: '#b06bff',
+      x: 60, y: 400, w: 250, h: 100,
+      desc: 'Lógica de la inteligencia artificial. Extiende Player para heredar control de posiciones.',
+      files: 'IA.java'
+    },
+    {
+      id: 'score', label: 'score', color: '#ff9b35',
+      x: 370, y: 200, w: 250, h: 160,
+      desc: 'Persistencia de resultados en JSON usando Gson. Gestiona historial de partidas.',
+      files: 'ScoreManager.java, GameRecord (inner class)'
+    },
+    {
+      id: 'ui', label: 'ui', color: '#00a8cc',
+      x: 370, y: 400, w: 250, h: 160,
+      desc: 'Interfaz de consola con efecto máquina de escribir (Teletype) para la experiencia del usuario.',
+      files: 'ConsoleUI.java, Teletype.java'
+    },
+    {
+      id: 'ext', label: 'External Libraries', color: '#555',
+      x: 700, y: 200, w: 220, h: 100,
+      desc: 'Librería externa para serialización/deserialización JSON.',
+      files: 'gson-2.10.1.jar'
+    }
+  ];
+
+  const classes = [
+    { id: 'TicTacToe', label: 'TicTacToe.java', pkg: 'root', x: 180, y: 90, w: 170, h: 34,
+      desc: 'Entry point. Orquesta el flujo del juego: inicializa Board, Player, IA, ConsoleUI y controla el game loop.',
+      detail: 'main(), startGame()' },
+    { id: 'Board', label: 'Board.java', pkg: 'model', x: 100, y: 250, w: 150, h: 34,
+      desc: 'Tablero 3×3. Almacena posiciones, muestra el estado y verifica condiciones de victoria.',
+      detail: 'showBoard(), checkBoard()' },
+    { id: 'Player', label: 'Player.java', pkg: 'model', x: 100, y: 310, w: 150, h: 34,
+      desc: 'Jugador humano con nombre, marca (H/M) y posiciones. Valida movimientos.',
+      detail: 'markPos(), getMark()' },
+    { id: 'IA', label: 'IA.java', pkg: 'ai', x: 100, y: 430, w: 150, h: 34,
+      desc: 'Extiende Player. Actualmente usa coordenadas aleatorias (sin estrategia propia).',
+      detail: 'extends Player, displayInfo()' },
+    { id: 'ScoreManager', label: 'ScoreManager.java', pkg: 'score', x: 410, y: 250, w: 170, h: 34,
+      desc: 'Persiste resultados como JSON. Usa Gson para serializar GameRecord a archivo.',
+      detail: 'saveResult(), loadRecords()' },
+    { id: 'GameRecord', label: 'GameRecord', pkg: 'score', x: 410, y: 310, w: 170, h: 34,
+      desc: 'Inner class / POJO con: partida, fecha, ganador, totalTurnos, empate.',
+      detail: 'Inner class de ScoreManager' },
+    { id: 'ConsoleUI', label: 'ConsoleUI.java', pkg: 'ui', x: 410, y: 430, w: 170, h: 34,
+      desc: 'Interfaz de usuario en consola. Muestra bienvenida, pide nombre y delega la impresión a Teletype.',
+      detail: 'showWelcome(), askPlayerName()' },
+    { id: 'Teletype', label: 'Teletype.java', pkg: 'ui', x: 410, y: 500, w: 170, h: 34,
+      desc: 'Efecto de máquina de escribir: imprime carácter por carácter con delay configurable.',
+      detail: 'print() con delay' },
+    { id: 'Gson', label: 'gson-2.10.1', pkg: 'ext', x: 740, y: 235, w: 150, h: 34,
+      desc: 'Google Gson — librería para conversión de objetos Java ↔ JSON.',
+      detail: 'com.google.gson' }
+  ];
+
+  /* Dependency edges: from → to */
+  const edges = [
+    { from: 'TicTacToe', to: 'Board',        label: 'usa' },
+    { from: 'TicTacToe', to: 'Player',       label: 'usa' },
+    { from: 'TicTacToe', to: 'IA',           label: 'usa' },
+    { from: 'TicTacToe', to: 'ScoreManager', label: 'usa' },
+    { from: 'TicTacToe', to: 'ConsoleUI',    label: 'usa' },
+    { from: 'IA',         to: 'Player',       label: 'extends', dashed: true },
+    { from: 'IA',         to: 'ConsoleUI',    label: 'usa' },
+    { from: 'ConsoleUI',  to: 'Teletype',     label: 'compone' },
+    { from: 'ScoreManager', to: 'GameRecord', label: 'crea' },
+    { from: 'ScoreManager', to: 'Gson',       label: 'usa' },
+  ];
+
+  /* ─── BUILD SVG ─── */
+  const ns = 'http://www.w3.org/2000/svg';
+  function el(tag, attrs, parent) {
+    const e = document.createElementNS(ns, tag);
+    for (const [k,v] of Object.entries(attrs||{})) e.setAttribute(k, v);
+    if (parent) parent.appendChild(e);
+    return e;
+  }
+
+  const svg = el('svg', { width: W, height: H, viewBox: `0 0 ${W} ${H}` });
+
+  /* Defs */
+  const defs = el('defs', {}, svg);
+
+  /* Arrow markers */
+  const mkArr = el('marker', { id:'arr', markerWidth:'10', markerHeight:'8', refX:'9', refY:'4', orient:'auto' }, defs);
+  el('path', { d:'M0,1 L0,7 L10,4 z', fill:'#00d4ff', opacity:'0.7' }, mkArr);
+
+  const mkArrD = el('marker', { id:'arrD', markerWidth:'10', markerHeight:'8', refX:'9', refY:'4', orient:'auto' }, defs);
+  el('path', { d:'M0,1 L0,7 L10,4 z', fill:'#b06bff', opacity:'0.7' }, mkArrD);
+
+  /* Glow filter */
+  const fGlow = el('filter', { id:'glow', x:'-30%', y:'-30%', width:'160%', height:'160%' }, defs);
+  el('feGaussianBlur', { stdDeviation:'4', result:'blur' }, fGlow);
+  const fMerge = el('feMerge', {}, fGlow);
+  el('feMergeNode', { in:'blur' }, fMerge);
+  el('feMergeNode', { in:'SourceGraphic' }, fMerge);
+
+  /* ─── DRAW PACKAGES ─── */
+  packages.forEach(p => {
+    const g = el('g', { class: 'pkg', 'data-id': p.id }, svg);
+
+    // Tab
+    const tabW = Math.min(p.label.length * 8.5 + 24, p.w - 10);
+    el('rect', {
+      x: p.x, y: p.y, width: tabW, height: 22, rx: '4',
+      fill: p.color, opacity: '0.12', stroke: p.color, 'stroke-width': '1.5',
+      'stroke-opacity': '0.5'
+    }, g);
+
+    el('text', {
+      x: p.x + 12, y: p.y + 15,
+      fill: p.color, 'font-size': '10', 'font-family': 'Orbitron, sans-serif',
+      'font-weight': '700', 'letter-spacing': '1'
+    }, g).textContent = p.label;
+
+    // Body
+    el('rect', {
+      x: p.x, y: p.y + 20, width: p.w, height: p.h - 20, rx: PKG_R,
+      fill: p.color, opacity: '0.04', stroke: p.color, 'stroke-width': '1.5',
+      'stroke-opacity': '0.35', 'stroke-dasharray': p.id === 'ext' ? '6 3' : 'none'
+    }, g);
+
+    // Hover
+    g.addEventListener('mouseenter', (e) => showTooltip(e, p.label, p.desc, p.files));
+    g.addEventListener('mousemove', moveTooltip);
+    g.addEventListener('mouseleave', hideTooltip);
+  });
+
+  /* ─── DRAW EDGES ─── */
+  function getClassCenter(id) {
+    const c = classes.find(cl => cl.id === id);
+    return { x: c.x + c.w / 2, y: c.y + c.h / 2, top: c.y, bottom: c.y + c.h, left: c.x, right: c.x + c.w };
+  }
+
+  function routeEdge(from, to) {
+    const s = getClassCenter(from);
+    const t = getClassCenter(to);
+    let x1, y1, x2, y2;
+
+    // Determine best anchor points
+    const dx = t.x - s.x;
+    const dy = t.y - s.y;
+
+    if (Math.abs(dx) > Math.abs(dy)) {
+      // Horizontal dominant
+      if (dx > 0) { x1 = s.right; y1 = s.y + 17; x2 = t.left; y2 = t.y + 17; }
+      else { x1 = s.left; y1 = s.y + 17; x2 = t.right; y2 = t.y + 17; }
+    } else {
+      // Vertical dominant
+      if (dy > 0) { x1 = s.x + s.right - s.left > 0 ? s.x + 85 : s.x; y1 = s.bottom; x2 = t.x + 85; y2 = t.top; }
+      else { x1 = s.x + 85; y1 = s.top; x2 = t.x + 85; y2 = t.bottom; }
+    }
+
+    return { x1, y1, x2, y2 };
+  }
+
+  edges.forEach(e => {
+    const r = routeEdge(e.from, e.to);
+    const midX = (r.x1 + r.x2) / 2;
+    const midY = (r.y1 + r.y2) / 2;
+
+    // Curved path
+    const d = `M${r.x1},${r.y1} Q${midX},${r.y1} ${midX},${midY} Q${midX},${r.y2} ${r.x2},${r.y2}`;
+
+    el('path', {
+      d: d,
+      fill: 'none',
+      stroke: e.dashed ? '#b06bff' : '#00d4ff',
+      'stroke-width': '1.3',
+      'stroke-opacity': '0.45',
+      'stroke-dasharray': e.dashed ? '5 3' : 'none',
+      'marker-end': e.dashed ? 'url(#arrD)' : 'url(#arr)'
+    }, svg);
+
+    // Label
+    const lbl = el('text', {
+      x: midX + 4, y: midY - 4,
+      fill: e.dashed ? '#b06bff' : '#4a8aaa',
+      'font-size': '9',
+      'font-family': 'Share Tech Mono, monospace',
+      opacity: '0.7'
+    }, svg);
+    lbl.textContent = e.label;
+  });
+
+  /* ─── DRAW CLASSES ─── */
+  classes.forEach(c => {
+    const pkg = packages.find(p => p.id === c.pkg);
+    const col = pkg ? pkg.color : '#1e3a5f';
+
+    const g = el('g', { class: 'cls', 'data-id': c.id }, svg);
+
+    // Shadow
+    el('rect', {
+      x: c.x + 2, y: c.y + 2, width: c.w, height: c.h, rx: '4',
+      fill: '#000', opacity: '0.3'
+    }, g);
+
+    // Box
+    el('rect', {
+      x: c.x, y: c.y, width: c.w, height: c.h, rx: '4',
+      fill: '#0f1628', stroke: '#1e3a5f', 'stroke-width': '1.5'
+    }, g);
+
+    // Accent bar
+    el('rect', {
+      x: c.x, y: c.y, width: '3', height: c.h, rx: '1',
+      fill: col, opacity: '0.8'
+    }, g);
+
+    // Icon dot
+    el('circle', {
+      cx: c.x + 16, cy: c.y + c.h / 2, r: '3',
+      fill: col, opacity: '0.6'
+    }, g);
+
+    // Name
+    el('text', {
+      x: c.x + 26, y: c.y + c.h / 2 + 4,
+      fill: '#c8e0f0', 'font-size': '11',
+      'font-family': 'Share Tech Mono, monospace'
+    }, g).textContent = c.label;
+
+    // Hover highlight
+    g.style.cursor = 'pointer';
+    g.addEventListener('mouseenter', function(e) {
+      this.querySelector('rect:nth-child(2)').setAttribute('stroke', col);
+      this.querySelector('rect:nth-child(2)').setAttribute('filter', 'url(#glow)');
+      showTooltip(e, c.label, c.desc, c.detail);
+    });
+    g.addEventListener('mousemove', moveTooltip);
+    g.addEventListener('mouseleave', function() {
+      this.querySelector('rect:nth-child(2)').setAttribute('stroke', '#1e3a5f');
+      this.querySelector('rect:nth-child(2)').removeAttribute('filter');
+      hideTooltip();
+    });
+  });
+
+  /* ─── ENTRY POINT BADGE ─── */
+  const ep = classes.find(c => c.id === 'TicTacToe');
+  const badgeG = el('g', {}, svg);
+  el('rect', {
+    x: ep.x + ep.w + 8, y: ep.y + 6, width: 70, height: 20, rx: '10',
+    fill: '#7fff6b', opacity: '0.15', stroke: '#7fff6b', 'stroke-width': '1'
+  }, badgeG);
+  el('text', {
+    x: ep.x + ep.w + 14, y: ep.y + 20,
+    fill: '#7fff6b', 'font-size': '9',
+    'font-family': 'Orbitron, sans-serif', 'font-weight': '700',
+    'letter-spacing': '1'
+  }, badgeG).textContent = '▸ ENTRY';
+
+  /* ─── INHERITANCE BADGE ─── */
+  const ia = classes.find(c => c.id === 'IA');
+  const inhG = el('g', {}, svg);
+  el('rect', {
+    x: ia.x + ia.w + 8, y: ia.y + 6, width: 82, height: 20, rx: '10',
+    fill: '#b06bff', opacity: '0.12', stroke: '#b06bff', 'stroke-width': '1'
+  }, inhG);
+  el('text', {
+    x: ia.x + ia.w + 14, y: ia.y + 20,
+    fill: '#b06bff', 'font-size': '9',
+    'font-family': 'Orbitron, sans-serif', 'font-weight': '700',
+    'letter-spacing': '1'
+  }, inhG).textContent = '◇ EXTENDS';
+
+  document.getElementById('diagram').appendChild(svg);
+
+  /* ─── TOOLTIP ─── */
+  const tooltip = document.getElementById('tooltip');
+  const ttTitle = document.getElementById('tt-title');
+  const ttDesc  = document.getElementById('tt-desc');
+  const ttFiles = document.getElementById('tt-files');
+
+  function showTooltip(e, title, desc, files) {
+    ttTitle.textContent = title;
+    ttTitle.style.color = '#00d4ff';
+    ttDesc.textContent = desc;
+    ttFiles.textContent = files ? '📄 ' + files : '';
+    tooltip.classList.add('visible');
+    moveTooltip(e);
+  }
+
+  function moveTooltip(e) {
+    let tx = e.clientX + 16;
+    let ty = e.clientY + 16;
+    if (tx + 280 > window.innerWidth) tx = e.clientX - 296;
+    if (ty + 120 > window.innerHeight) ty = e.clientY - 120;
+    tooltip.style.left = tx + 'px';
+    tooltip.style.top = ty + 'px';
+  }
+
+  function hideTooltip() {
+    tooltip.classList.remove('visible');
+  }
+
+})();
+</script>
+</body>
+</html>

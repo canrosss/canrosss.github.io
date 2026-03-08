@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TicTacToe — Diagramas del Proyecto</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.6.1/mermaid.min.js"></script>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;700;900&display=swap');
+
+  :root {
+    --bg: #0a0e1a;
+    --panel: #0f1628;
+    --border: #1e3a5f;
+    --accent: #00d4ff;
+    --accent2: #ff6b35;
+    --accent3: #7fff6b;
+    --text: #c8e0f0;
+    --dim: #4a6a8a;
+    --glow: 0 0 20px rgba(0, 212, 255, 0.3);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Share Tech Mono', monospace;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Grid background */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(0,212,255,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,212,255,0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  header {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    padding: 50px 20px 30px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .title-tag {
+    font-size: 11px;
+    color: var(--accent);
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+
+  h1 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: clamp(28px, 5vw, 52px);
+    font-weight: 900;
+    color: #fff;
+    text-shadow: 0 0 30px rgba(0,212,255,0.5);
+    letter-spacing: 4px;
+  }
+
+  h1 span { color: var(--accent); }
+
+  .subtitle {
+    margin-top: 10px;
+    font-size: 13px;
+    color: var(--dim);
+    letter-spacing: 2px;
+  }
+
+  /* Nav tabs */
+  nav {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    padding: 20px;
+    flex-wrap: wrap;
+  }
+
+  .tab {
+    padding: 10px 20px;
+    border: 1px solid var(--border);
+    background: var(--panel);
+    color: var(--dim);
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 2px;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-transform: uppercase;
+  }
+
+  .tab:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  .tab.active {
+    border-color: var(--accent);
+    color: var(--bg);
+    background: var(--accent);
+    box-shadow: var(--glow);
+  }
+
+  /* Sections */
+  .section {
+    display: none;
+    position: relative;
+    z-index: 1;
+    padding: 20px 40px 60px;
+    max-width: 1400px;
+    margin: 0 auto;
+    animation: fadeIn 0.3s ease;
+  }
+
+  .section.active { display: block; }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .section-title {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 18px;
+    color: var(--accent);
+    margin-bottom: 8px;
+    letter-spacing: 3px;
+  }
+
+  .section-desc {
+    font-size: 12px;
+    color: var(--dim);
+    margin-bottom: 30px;
+    letter-spacing: 1px;
+    line-height: 1.8;
+  }
+
+  /* Diagram cards */
+  .diagram-card {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    padding: 30px;
+    margin-bottom: 30px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .diagram-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 3px; height: 100%;
+    background: var(--accent);
+  }
+
+  .diagram-card.orange::before { background: var(--accent2); }
+  .diagram-card.green::before { background: var(--accent3); }
+
+  .card-label {
+    font-size: 10px;
+    letter-spacing: 3px;
+    color: var(--dim);
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+
+  .mermaid {
+    display: flex;
+    justify-content: center;
+    overflow-x: auto;
+  }
+
+  /* Bug panel */
+  .bugs-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 16px;
+    margin-top: 10px;
+  }
+
+  .bug-card {
+    background: var(--panel);
+    border: 1px solid #3a1a1a;
+    padding: 20px;
+    position: relative;
+  }
+
+  .bug-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 3px; height: 100%;
+    background: var(--accent2);
+  }
+
+  .bug-title {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 13px;
+    color: var(--accent2);
+    margin-bottom: 10px;
+  }
+
+  .bug-desc {
+    font-size: 12px;
+    color: var(--text);
+    line-height: 1.8;
+  }
+
+  .bug-file {
+    font-size: 10px;
+    color: var(--dim);
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid var(--border);
+  }
+
+  .tag {
+    display: inline-block;
+    padding: 2px 8px;
+    font-size: 10px;
+    letter-spacing: 1px;
+    margin-right: 4px;
+    margin-bottom: 4px;
+  }
+
+  .tag.critical { background: rgba(255,107,53,0.15); color: var(--accent2); border: 1px solid rgba(255,107,53,0.3); }
+  .tag.warn { background: rgba(255,220,0,0.1); color: #ffd700; border: 1px solid rgba(255,220,0,0.2); }
+  .tag.info { background: rgba(0,212,255,0.1); color: var(--accent); border: 1px solid rgba(0,212,255,0.2); }
+
+  /* Stats bar */
+  .stats {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-bottom: 30px;
+  }
+
+  .stat {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    padding: 14px 22px;
+    min-width: 120px;
+  }
+
+  .stat-num {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 28px;
+    color: var(--accent);
+  }
+
+  .stat-lbl {
+    font-size: 10px;
+    color: var(--dim);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar { width: 6px; height: 6px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--border); }
+  ::-webkit-scrollbar-thumb:hover { background: var(--accent); }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="title-tag">// com.canrossoft.tictactoe — v0.2 · Updated Mar 07 2026</div>
+  <h1>TIC<span>TAC</span>TOE</h1>
+  <div class="subtitle">ARQUITECTURA DEL PROYECTO · DIAGRAMAS TÉCNICOS</div>
+</header>
+
+<nav>
+  <button class="tab active" onclick="show('clases')">Diagrama de Clases</button>
+  <button class="tab" onclick="show('paquetes')">Paquetes</button>
+  <button class="tab" onclick="show('flujo')">Flujo del Juego</button>
+  <button class="tab" onclick="show('secuencia')">Secuencia</button>
+  <button class="tab" onclick="show('bugs')">⚠ Bugs 4/8 Fixed</button>
+</nav>
+
+<!-- CLASES -->
+<div id="clases" class="section active">
+  <div class="section-title">// DIAGRAMA DE CLASES</div>
+  <div class="section-desc">Estructura completa de clases, atributos, métodos y relaciones de herencia/composición.</div>
+
+  <div class="stats">
+    <div class="stat"><div class="stat-num">7</div><div class="stat-lbl">Clases</div></div>
+    <div class="stat"><div class="stat-num">5</div><div class="stat-lbl">Paquetes</div></div>
+    <div class="stat"><div class="stat-num">1</div><div class="stat-lbl">Herencia</div></div>
+    <div class="stat"><div class="stat-num">6</div><div class="stat-lbl">Dependencias</div></div>
+  </div>
+
+  <div class="diagram-card">
+    <div class="card-label">CLASS DIAGRAM — FULL STRUCTURE</div>
+    <div class="mermaid">
+classDiagram
+    class TicTacToe {
+        +Boolean isPlaying$
+        +Board board$
+        +Player p$
+        +IA ia$
+        +ConsoleUI console$
+        +int turnCount$
+        +startGame()$
+        +main(args)$
+    }
+
+    class Player {
+        -int X_pos
+        -int Y_pos
+        -String name
+        -char[][] positions
+        -char mark
+        -Boolean status
+        +Player(n, m)
+        +setMark(char)
+        +setName(String)
+        +getMark() char
+        +getName() String
+        +markPos(int, int)
+        +setPositions(char[][])
+        +getPositions() char[][]
+        +getStatus() Boolean
+        +setStatus(Boolean)
+    }
+
+    class IA {
+        -ConsoleUI console$
+        +IA(n, m)
+        +displayInfo()
+    }
+
+    class Board {
+        +boolean isPlaying
+        -int MAX_X$
+        -int MAX_Y$
+        -char SPACE$
+        -char[][] positions
+        +Board()
+        +setPositions(char[][])
+        +getPositions() char[][]
+        +showBoard()
+        +initializeBoard()
+        +checkBoard(char, String, char, String)
+    }
+
+    class ScoreManager {
+        -String SCORES_FILE$
+        -Gson gson$
+        +saveResult(String, int, boolean)$
+        -loadRecords() List~GameRecord~$
+    }
+
+    class GameRecord {
+        +int partida
+        +String fecha
+        +String ganador
+        +int totalTurnos
+        +boolean empate
+    }
+
+    class ConsoleUI {
+        +Teletype tty
+        +showWelcome()
+        +askPlayerName()
+        +print(String)
+    }
+
+    class Teletype {
+        -int DELAY$
+        +String txt$
+        +print(String)
+    }
+
+    IA --|> Player : extends
+    TicTacToe --> Board : usa
+    TicTacToe --> Player : usa
+    TicTacToe --> IA : usa
+    TicTacToe --> ConsoleUI : usa
+    TicTacToe --> ScoreManager : usa
+    IA --> ConsoleUI : usa
+    ConsoleUI --> Teletype : compone
+    ScoreManager --> GameRecord : crea/gestiona
+    Player --> Board : intercambia posiciones
+    </div>
+  </div>
+</div>
+
+<!-- PAQUETES -->
+<div id="paquetes" class="section">
+  <div class="section-title">// DIAGRAMA DE PAQUETES</div>
+  <div class="section-desc">Organización de paquetes y dependencias entre módulos del proyecto.</div>
+
+  <div class="diagram-card green">
+    <div class="card-label">PACKAGE DIAGRAM</div>
+    <div class="mermaid">
+graph TB
+    subgraph ROOT["com.canrossoft.tictactoe"]
+        MAIN["TicTacToe.java - Entry Point"]
+
+        subgraph MODEL["model"]
+            BOARD["Board.java"]
+            PLAYER["Player.java"]
+        end
+
+        subgraph AI["ai"]
+            IA["IA.java"]
+        end
+
+        subgraph SCORE["score"]
+            SM["ScoreManager.java"]
+            GR["GameRecord - inner class"]
+        end
+
+        subgraph UI["ui"]
+            CUI["ConsoleUI.java"]
+            TTY["Teletype.java"]
+        end
+    end
+
+    subgraph EXT["External Libraries"]
+        GSON["gson-2.10.1"]
+    end
+
+    MAIN --> MODEL
+    MAIN --> AI
+    MAIN --> SCORE
+    MAIN --> UI
+    AI --> MODEL
+    AI --> UI
+    SCORE --> GSON
+    CUI --> TTY
+
+    style ROOT fill:#0f1628,stroke:#1e3a5f,color:#c8e0f0
+    style MODEL fill:#0a1a2a,stroke:#1e5f3a,color:#7fff6b
+    style AI fill:#0a1a2a,stroke:#3a1e5f,color:#b06bff
+    style SCORE fill:#0a1a2a,stroke:#5f3a1e,color:#ff9b35
+    style UI fill:#0a1a2a,stroke:#1e4a5f,color:#00d4ff
+    style EXT fill:#0a0a0a,stroke:#333,color:#888
+    </div>
+  </div>
+</div>
+
+<!-- FLUJO -->
+<div id="flujo" class="section">
+  <div class="section-title">// FLUJO DEL JUEGO</div>
+  <div class="section-desc">Lógica de ejecución paso a paso desde el inicio hasta el fin de la partida.</div>
+
+  <div class="diagram-card orange">
+    <div class="card-label">GAME FLOW DIAGRAM</div>
+    <div id="flowchart-container" style="display:flex;justify-content:center;overflow-x:auto;"></div>
+  </div>
+</div>
+
+<!-- SECUENCIA -->
+<div id="secuencia" class="section">
+  <div class="section-title">// DIAGRAMA DE SECUENCIA</div>
+  <div class="section-desc">Interacción entre objetos durante un turno completo de juego.</div>
+
+  <div class="diagram-card">
+    <div class="card-label">SEQUENCE DIAGRAM — ONE TURN</div>
+    <div class="mermaid">
+sequenceDiagram
+    actor Human as Human
+    participant Main as TicTacToe
+    participant P as Player
+    participant B as Board
+    participant IA as IA
+    participant SM as ScoreManager
+    participant UI as ConsoleUI
+
+    Main->>UI: showWelcome()
+    Main->>UI: askPlayerName()
+    Human->>Main: input nombre
+    Main->>P: setName(input)
+
+    loop Cada turno
+        Main->>UI: print("Tell me your move")
+        Human->>Main: x, y
+        Main->>P: setPositions(board.getPositions())
+        Main->>P: markPos(x, y)
+
+        alt Posición inválida
+            P-->>Main: status = false
+            Main->>Main: continue loop
+        else Posición válida
+            P-->>Main: status = true
+            Main->>B: setPositions(p.getPositions())
+            Main->>B: showBoard()
+        end
+
+        alt Coordenadas IA diferentes al jugador
+            Main->>IA: setPositions(board.getPositions())
+            Main->>IA: markPos(x_rand, y_rand)
+            Main->>B: setPositions(ia.getPositions())
+        else Colisión de coordenadas
+            Main->>Main: generar nuevas coords random
+            Main->>IA: markPos(nuevas coords)
+            Main->>B: setPositions(ia.getPositions())
+        end
+
+        Main->>B: showBoard()
+        Main->>B: checkBoard(p.getMark(), p.getName(), ia.getMark(), ia.getName())
+
+        alt Alguien ganó
+            B-->>Main: isPlaying = false
+            Main->>SM: saveResult(p.getName(), turnCount, false)
+        end
+    end
+    </div>
+  </div>
+</div>
+
+<!-- BUGS -->
+<div id="bugs" class="section">
+  <div class="section-title">// BUGS & MEJORAS — TRACKING</div>
+  <div class="section-desc">Estado actual: 4 corregidos · 4 pendientes — Última actualización: Marzo 07, 2026</div>
+
+  <div class="bugs-grid">
+
+    <div class="bug-card" style="border-color:#1a3a1a;">
+      <div class="bug-title" style="color:var(--accent3);">✅ Índice fuera de rango</div>
+      <span class="tag" style="background:rgba(127,255,107,0.15);color:#7fff6b;border:1px solid rgba(127,255,107,0.3);">FIXED — Mar 07 2026</span>
+      <div class="bug-desc">
+        Se corrigió <code>initializeBoard()</code> cambiando <code>x &lt;= positions.length</code> por <code>x &lt; positions.length</code>. En <code>checkBoard()</code> se eliminaron los accesos a <code>positions[1][3]</code> y <code>positions[0][3]</code> reescribiendo el método completo.
+      </div>
+      <div class="bug-file">📄 Board.java · initializeBoard() · checkBoard()</div>
+    </div>
+
+    <div class="bug-card" style="border-color:#1a3a1a;">
+      <div class="bug-title" style="color:var(--accent3);">✅ checkBoard incompleto</div>
+      <span class="tag" style="background:rgba(127,255,107,0.15);color:#7fff6b;border:1px solid rgba(127,255,107,0.3);">FIXED — Mar 07 2026</span>
+      <div class="bug-desc">
+        Se reescribió <code>checkBoard()</code> con loops que verifican las 3 filas, 3 columnas, diagonal principal y diagonal inversa para ambos jugadores.
+      </div>
+      <div class="bug-file">📄 Board.java · checkBoard()</div>
+    </div>
+
+    <div class="bug-card">
+      <div class="bug-title">🟡 IA sin lógica real</div>
+      <span class="tag warn">PENDING</span>
+      <div class="bug-desc">
+        La IA solo juega coordenadas aleatorias desde <code>TicTacToe.java</code>. La clase <code>IA</code> no tiene método propio de decisión — extiende <code>Player</code> pero no agrega estrategia.
+      </div>
+      <div class="bug-file">📄 IA.java · TicTacToe.java</div>
+    </div>
+
+    <div class="bug-card">
+      <div class="bug-title">🟡 Colisión IA no garantizada</div>
+      <span class="tag warn">PENDING</span>
+      <div class="bug-desc">
+        La colisión se detecta solo cuando <code>x_rand == x AND y_rand == y</code> (exactamente igual al jugador), pero no verifica si la celda ya está ocupada por un movimiento anterior.
+      </div>
+      <div class="bug-file">📄 TicTacToe.java · main()</div>
+    </div>
+
+    <div class="bug-card">
+      <div class="bug-title">🟡 InputMismatchException</div>
+      <span class="tag warn">PENDING</span>
+      <div class="bug-desc">
+        Si el jugador ingresa un carácter en vez de un número al pedir X o Y, <code>scanner.nextInt()</code> lanza excepción y el juego crashea. El import existe pero no hay try-catch implementado.
+      </div>
+      <div class="bug-file">📄 TicTacToe.java · importado pero no usado</div>
+    </div>
+
+    <div class="bug-card" style="border-color:#1a3a1a;">
+      <div class="bug-title" style="color:var(--accent3);">✅ Marca hardcodeada en checkBoard</div>
+      <span class="tag" style="background:rgba(127,255,107,0.15);color:#7fff6b;border:1px solid rgba(127,255,107,0.3);">FIXED — Mar 07 2026</span>
+      <div class="bug-desc">
+        Se refactorizó <code>checkBoard()</code> para recibir marcas y nombres por parámetro: <code>checkBoard(char markPlayer, String namePlayer, char markIA, String nameIA)</code>. Ya no usa <code>'M'</code> ni <code>'H'</code> hardcodeados.
+      </div>
+      <div class="bug-file">📄 Board.java · checkBoard() · TicTacToe.java</div>
+    </div>
+
+    <div class="bug-card">
+      <div class="bug-title">🔵 Estado isPlaying duplicado</div>
+      <span class="tag info">PENDING</span>
+      <div class="bug-desc">
+        Hay dos campos <code>isPlaying</code>: uno en <code>TicTacToe</code> (estático, nunca cambia) y otro en <code>Board</code> (el que realmente controla el juego). El de <code>TicTacToe</code> es redundante.
+      </div>
+      <div class="bug-file">📄 TicTacToe.java · Board.java</div>
+    </div>
+
+    <div class="bug-card" style="border-color:#1a3a1a;">
+      <div class="bug-title" style="color:var(--accent3);">✅ totalTurnos siempre es 1</div>
+      <span class="tag" style="background:rgba(127,255,107,0.15);color:#7fff6b;border:1px solid rgba(127,255,107,0.3);">FIXED — Mar 07 2026</span>
+      <div class="bug-desc">
+        Se agregó un contador <code>turnCount</code> en el game loop de <code>TicTacToe.java</code> que se incrementa en cada turno. <code>saveResult()</code> ahora recibe el conteo real.
+      </div>
+      <div class="bug-file">📄 TicTacToe.java · game loop · ScoreManager</div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  mermaid.initialize({
+    startOnLoad: true,
+    theme: 'dark',
+    themeVariables: {
+      primaryColor: '#0f1628',
+      primaryTextColor: '#c8e0f0',
+      primaryBorderColor: '#1e3a5f',
+      lineColor: '#00d4ff',
+      secondaryColor: '#0a1020',
+      tertiaryColor: '#0f1628',
+      background: '#0a0e1a',
+      mainBkg: '#0f1628',
+      nodeBorder: '#1e3a5f',
+      clusterBkg: '#0a0e1a',
+      titleColor: '#00d4ff',
+      edgeLabelBackground: '#0f1628',
+      actorBkg: '#0f1628',
+      actorBorder: '#00d4ff',
+      actorTextColor: '#c8e0f0',
+      activationBkgColor: '#1e3a5f',
+      sequenceNumberColor: '#00d4ff',
+      noteBkgColor: '#0f1628',
+      noteTextColor: '#c8e0f0',
+      noteBorderColor: '#1e3a5f',
+    },
+    flowchart: { curve: 'basis', padding: 20 },
+    sequence: { mirrorActors: false, messageMargin: 30 },
+  });
+
+  // ── Custom SVG flowchart (avoids Mermaid parser issues) ──────────────────
+  (function buildFlowchart() {
+    const nodes = [
+      { id:'A', label:'START',                   type:'pill',    x:300, y:20  },
+      { id:'B', label:'new TicTacToe',            type:'rect',    x:300, y:90  },
+      { id:'C', label:'startGame / showBoard',    type:'rect',    x:300, y:160 },
+      { id:'D', label:'askPlayerName',            type:'rect',    x:300, y:230 },
+      { id:'E', label:'input vacio?',             type:'diamond', x:300, y:300 },
+      { id:'F', label:'name = Pepito',            type:'rect',    x:160, y:370 },
+      { id:'G', label:'name = input',             type:'rect',    x:440, y:370 },
+      { id:'H', label:'LOOP',                     type:'pill',    x:300, y:450 },
+      { id:'I', label:'Coords random para IA',    type:'rect',    x:300, y:520 },
+      { id:'J', label:'Pedir X e Y al jugador',   type:'rect',    x:300, y:590 },
+      { id:'K', label:'p.markPos(x,y)',           type:'rect',    x:300, y:660 },
+      { id:'L', label:'movimiento valido?',       type:'diamond', x:300, y:730 },
+      { id:'M', label:'board.setPositions jugador', type:'rect',  x:300, y:820 },
+      { id:'N', label:'board.showBoard',          type:'rect',    x:300, y:890 },
+      { id:'O', label:'colision con jugador?',    type:'diamond', x:300, y:960 },
+      { id:'P', label:'nuevas coords IA',         type:'rect',    x:130, y:1030},
+      { id:'Q', label:'ia.markPos nuevas',        type:'rect',    x:130, y:1100},
+      { id:'R', label:'ia.markPos random',        type:'rect',    x:470, y:1030},
+      { id:'S', label:'board.setPositions IA',    type:'rect',    x:300, y:1170},
+      { id:'T', label:'board.showBoard',          type:'rect',    x:300, y:1240},
+      { id:'U', label:'board.checkBoard',         type:'rect',    x:300, y:1310},
+      { id:'V', label:'alguien gano?',            type:'diamond', x:300, y:1380},
+      { id:'W', label:'ScoreManager.saveResult',  type:'rect',    x:300, y:1470},
+      { id:'X', label:'END',                      type:'pill',    x:300, y:1540},
+    ];
+
+    const edges = [
+      {from:'A',to:'B',label:''},{from:'B',to:'C',label:''},{from:'C',to:'D',label:''},
+      {from:'D',to:'E',label:''},{from:'E',to:'F',label:'Si'},{from:'E',to:'G',label:'No'},
+      {from:'F',to:'H',label:''},{from:'G',to:'H',label:''},
+      {from:'H',to:'I',label:''},{from:'I',to:'J',label:''},{from:'J',to:'K',label:''},
+      {from:'K',to:'L',label:''},{from:'L',to:'H',label:'No (invalido)',lx:-90},
+      {from:'L',to:'M',label:'Si'},{from:'M',to:'N',label:''},{from:'N',to:'O',label:''},
+      {from:'O',to:'P',label:'Si'},{from:'P',to:'Q',label:''},{from:'Q',to:'H',label:'volver',lx:-180},
+      {from:'O',to:'R',label:'No'},{from:'R',to:'S',label:''},
+      {from:'S',to:'T',label:''},{from:'T',to:'U',label:''},{from:'U',to:'V',label:''},
+      {from:'V',to:'H',label:'No',lx:-90},{from:'V',to:'W',label:'Si'},
+      {from:'W',to:'X',label:''},
+    ];
+
+    const NW=160, NH=32, DW=160, DH=44, PW=120, PH=32;
+    const colors = {
+      pill:'#0f2a1a', pillStroke:'#7fff6b', pillText:'#7fff6b',
+      rect:'#0f1628', rectStroke:'#1e3a5f', rectText:'#c8e0f0',
+      diamond:'#1a1020', diamondStroke:'#b06bff', diamondText:'#b06bff',
+      loop:'#0f1a2a', loopStroke:'#00d4ff', loopText:'#00d4ff',
+      edge:'#00d4ff', label:'#7aafcf',
+    };
+
+    function getNodePos(id) { return nodes.find(n=>n.id===id); }
+    function nx(n){ return n.x; }
+    function ny(n){ return n.y + (n.type==='diamond'?DH/2:n.type==='pill'?PH/2:NH/2); }
+
+    let svgParts = [];
+    // draw edges first
+    edges.forEach(e=>{
+      const s=getNodePos(e.from), t=getNodePos(e.to);
+      const x1=nx(s), y1=ny(s)+(s.type==='diamond'?DH/2:s.type==='pill'?PH/2:NH/2);
+      const x2=nx(t), y2=ny(t)-(t.type==='diamond'?DH/2:t.type==='pill'?PH/2:NH/2);
+      // simple straight or bent line
+      let d;
+      if(e.lx){
+        const bx = x1+(e.lx||0);
+        d=`M${x1},${y1} L${bx},${y1} L${bx},${y2} L${x2},${y2}`;
+      } else {
+        d=`M${x1},${y1} L${x2},${y2}`;
+      }
+      svgParts.push(`<path d="${d}" stroke="${colors.edge}" stroke-width="1.5" fill="none" marker-end="url(#arr)"/>`);
+      if(e.label){
+        const mx=e.lx? x1+(e.lx/2) : (x1+x2)/2;
+        const my=(y1+y2)/2;
+        svgParts.push(`<text x="${mx+4}" y="${my}" fill="${colors.label}" font-size="11" font-family="Share Tech Mono,monospace">${e.label}</text>`);
+      }
+    });
+
+    // draw nodes
+    nodes.forEach(n=>{
+      if(n.type==='rect'){
+        const isLoop = n.id==='H';
+        const fill=isLoop?colors.loop:colors.rect;
+        const stroke=isLoop?colors.loopStroke:colors.rectStroke;
+        const tc=isLoop?colors.loopText:colors.rectText;
+        svgParts.push(`<rect x="${n.x-NW/2}" y="${n.y}" width="${NW}" height="${NH}" rx="4" fill="${fill}" stroke="${stroke}" stroke-width="1.5"/>`);
+        svgParts.push(`<text x="${n.x}" y="${n.y+NH/2+5}" fill="${tc}" font-size="11" font-family="Share Tech Mono,monospace" text-anchor="middle">${n.label}</text>`);
+      } else if(n.type==='diamond'){
+        const hw=DW/2, hh=DH/2;
+        const pts=`${n.x},${n.y} ${n.x+hw},${n.y+hh} ${n.x},${n.y+DH} ${n.x-hw},${n.y+hh}`;
+        svgParts.push(`<polygon points="${pts}" fill="${colors.diamond}" stroke="${colors.diamondStroke}" stroke-width="1.5"/>`);
+        svgParts.push(`<text x="${n.x}" y="${n.y+hh+5}" fill="${colors.diamondText}" font-size="11" font-family="Share Tech Mono,monospace" text-anchor="middle">${n.label}</text>`);
+      } else if(n.type==='pill'){
+        const isEnd = n.id==='X';
+        const fill=isEnd?'#1a0f0f':colors.pill;
+        const stroke=isEnd?'#ff6b35':colors.pillStroke;
+        const tc=isEnd?'#ff6b35':colors.pillText;
+        svgParts.push(`<rect x="${n.x-PW/2}" y="${n.y}" width="${PW}" height="${PH}" rx="${PH/2}" fill="${fill}" stroke="${stroke}" stroke-width="2"/>`);
+        svgParts.push(`<text x="${n.x}" y="${n.y+PH/2+5}" fill="${tc}" font-size="12" font-weight="bold" font-family="Orbitron,monospace" text-anchor="middle">${n.label}</text>`);
+      }
+    });
+
+    const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="650" height="1600" viewBox="0 0 650 1600">
+      <defs>
+        <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+          <path d="M0,0 L0,6 L8,3 z" fill="${colors.edge}"/>
+        </marker>
+      </defs>
+      ${svgParts.join('\n')}
+    </svg>`;
+
+    document.getElementById('flowchart-container').innerHTML = svg;
+  })();
+
+  function show(id) {
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    event.target.classList.add('active');
+  }
+</script>
+</body>
+</html>
